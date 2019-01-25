@@ -10,6 +10,26 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:..\..\Nez\Nez.PipelineImporter\bin\Release\Ionic.ZLib.dll
+/reference:..\..\Nez\Nez.PipelineImporter\bin\Release\Newtonsoft.Json.dll
+/reference:..\..\Nez\Nez.PipelineImporter\bin\Release\Nez.PipelineImporter.dll
 
 #---------------------------------- Content ---------------------------------#
+
+#begin img/basic-prototyping.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:img/basic-prototyping.png
+
+#begin tiled/makeSureTiledImports.tmx
+/importer:TiledMapImporter
+/processor:TiledMapProcessor
+/build:tiled/makeSureTiledImports.tmx
 
