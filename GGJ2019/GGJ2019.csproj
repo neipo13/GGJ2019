@@ -43,10 +43,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Components\AnimationManager.cs" />
+    <Compile Include="Components\BulletController.cs" />
     <Compile Include="Components\PlayerController.cs" />
     <Compile Include="Constants\PhysicsLayers.cs" />
     <Compile Include="Constants\RenderLayers.cs" />
     <Compile Include="Constants\Strings.cs" />
+    <Compile Include="Entities\Bullet.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="NezGame.cs" />
     <Compile Include="Program.cs" />

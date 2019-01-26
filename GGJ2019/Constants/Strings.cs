@@ -10,5 +10,7 @@ namespace GGJ2019.Constants
     {
         public const string MoveCollider = "movebox";
         public const string HitCollider = "hitbox";
+
+        public const string Bullet = "bullet";
     }
 }

@@ -1,4 +1,5 @@
-﻿using GGJ2019.Util.Input;
+﻿using GGJ2019.Entities;
+using GGJ2019.Util.Input;
 using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Audio;
@@ -101,7 +102,8 @@ namespace GGJ2019.Components
                 {
                     lr = Direction.Left;
                 }
-                //weapon.Fire(lr);
+                var bullet = entity.scene.addEntity(new Bullet(lr));
+                bullet.position = entity.position;
             }
 
         }

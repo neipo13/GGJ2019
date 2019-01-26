@@ -10,5 +10,9 @@ namespace GGJ2019.Constants
     {
         public const int tiles = 1 << 0;
         public const int move = 1 << 1;
+        public const int playerHit = 1 << 2;
+        public const int enemyHit = 1 << 3;
+        public const int playerBullet = 1 << 4;
+        public const int enemyBullet = 1 << 5;
     }
 }
