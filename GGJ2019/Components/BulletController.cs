@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GGJ2019.Components
 {
-    public class BulletController : Component, IUpdatable
+    public class BulletController : Component, ITriggerListener
     {
         Mover mover;
         public Vector2 velocity;

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace GGJ2019.Util
 {
-    public class PlatformSnapFollowCamera : Component, IUpdatable
+    public class PlatformSnapFollowCamera : Component, ITriggerListener
     {
         public Nez.Camera camera;
 
@@ -75,7 +75,7 @@ namespace GGJ2019.Util
         }
 
 
-        void IUpdatable.update()
+        void ITriggerListener.update()
         {
             // translate the deadzone to be in world space
             var halfScreen = entity.scene.sceneRenderTargetSize.ToVector2() * 0.5f;

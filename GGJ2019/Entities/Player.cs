@@ -1,6 +1,7 @@
 ﻿using GGJ2019.Components;
 using GGJ2019.Constants;
 using GGJ2019.Util.Input;
+using Microsoft.Xna.Framework;
 using Nez;
 using Nez.Sprites;
 using Nez.Textures;
@@ -17,7 +18,7 @@ namespace GGJ2019.Entities
     public class Player : Entity
     {
         public Entity followEntity;
-        public Player(InputHandler input, List<Subtexture> subtextures, TiledTileLayer collisionLayer, Entity followEntity): base("player")
+        public Player(InputHandler input, List<Subtexture> subtextures, TiledTileLayer collisionLayer, Entity followEntity, Vector2 velocity = new Vector2()): base("player")
         {
             this.followEntity = followEntity;
             var sprite = addComponent(new Sprite<Animations>(subtextures[32]));
@@ -33,6 +34,7 @@ namespace GGJ2019.Entities
             box.collidesWithLayers = PhysicsLayers.tiles;
             addComponent(new TiledMapMover(collisionLayer));
             var playerController = addComponent(new PlayerController(input, followEntity));
+            playerController.velocity = velocity;
 
             var collectionBox = addComponent(new BoxCollider(12, 12));
             collectionBox.isTrigger = true;

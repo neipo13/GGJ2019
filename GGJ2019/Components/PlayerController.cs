@@ -39,7 +39,7 @@ namespace GGJ2019.Components
 
 
         float moveSpeed = 175f;
-        Vector2 velocity;
+        public Vector2 velocity;
         float gravity = 800f;
         float runAccel = 1000f;
         float friction = 400f;
@@ -313,7 +313,13 @@ namespace GGJ2019.Components
             var sigh = entity.scene.addEntity(new Sigh(scene.tiles));
             sigh.position = entity.position;
             sprite.onAnimationCompletedEvent -= sighOver;
-            Core.schedule(2f, (t) => headingHome = true);
+            Core.schedule(2f, (t) =>
+            {
+                headingHome = true;
+                var e = new Arrow(scene.tiles);
+                e.position = entity.position + new Vector2(10f, -40f);
+                entity.scene.addEntity(e);
+            });
         }
 
         void updateCalm()

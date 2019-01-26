@@ -17,5 +17,6 @@ namespace GGJ2019.Constants
         public const int noHit = 1 << 6;
         public const int mcguff = 1 << 7;
         public const int collect = 1 << 8;
+        public const int car = 1 << 9;
     }
 }

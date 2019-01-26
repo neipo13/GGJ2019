@@ -17,12 +17,15 @@ namespace GGJ2019.Scenes
 {
     public class GameScene : Scene
     {
-        InputHandler[] inputs;
+        public InputHandler[] inputs;
 
 
         public List<Subtexture> tiles;
+        public List<Subtexture> carSubtextures;
         public List<Subtexture> characters;
         PlatformSnapFollowCamera followCamera;
+        public TiledTileLayer collisionLayer;
+        public Entity followEntity;
 
         public override void initialize()
         {
@@ -45,6 +48,8 @@ namespace GGJ2019.Scenes
             tiles = Subtexture.subtexturesFromAtlas(texture, 16, 16);
             var t2 = content.Load<Texture2D>("img/characters");
             characters = Subtexture.subtexturesFromAtlas(t2, 32, 32);
+            var t3 = content.Load<Texture2D>("img/car");
+            carSubtextures = Subtexture.subtexturesFromAtlas(t3, 56, 24);
 
             //load tiled
             var tiledMap = content.Load<TiledMap>($"tiled/level");
@@ -53,16 +58,12 @@ namespace GGJ2019.Scenes
             tileMapComponent.setLayersToRender("collision");
             tileMapComponent.renderLayer = (int)Constants.RenderLayers.Background;
             tileMapComponent.physicsLayer = PhysicsLayers.tiles;
-            var collisionLayer = tileMapComponent.collisionLayer;
+            collisionLayer = tileMapComponent.collisionLayer;
 
-            var followEntity = addEntity(new Entity());
+            followEntity = addEntity(new Entity());
             var noHit = followEntity.addComponent<CircleCollider>();
             noHit.physicsLayer = Constants.PhysicsLayers.noHit;
-            var player = new Player(inputs[0], tiles, collisionLayer, followEntity);
-            var spawnObj = tiledMap.getObjectGroup("playerSpawn").objects.First();
-            player.position = spawnObj.position + Util.TiledPositionHelper.tiledCenteringVec;
-            followEntity.position = player.position;
-            addEntity(player);
+            var car = new Car(carSubtextures);
 
             followCamera = camera.addComponent(new PlatformSnapFollowCamera(followEntity));
             followCamera.mapSize = new Vector2(tiledMap.widthInPixels, tiledMap.heightInPixels);
