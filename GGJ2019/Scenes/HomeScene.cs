@@ -57,6 +57,8 @@ namespace GGJ2019.Scenes
                 .setLoops(Nez.Tweens.LoopType.PingPong, 99)
                 .start();
 
+            ball.tween("rotation", 100f, 10f).setEaseType(Nez.Tweens.EaseType.Linear).start();
+
         }
         
     }
