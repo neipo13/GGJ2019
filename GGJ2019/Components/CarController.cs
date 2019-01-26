@@ -24,6 +24,11 @@ namespace GGJ2019.Components
         float driveInLocation = 70f;
         ColliderTriggerHelper triggerHelper;
 
+        public CarController(bool homeScene = false)
+        {
+            this.homeScene = homeScene;
+        }
+
         public override void onAddedToEntity()
         {
             base.onAddedToEntity();
@@ -80,17 +85,13 @@ namespace GGJ2019.Components
         {
             entity.position = new Vector2(500f, 96f);
             entity
-                .tweenPositionTo(new Vector2(driveInLocation, entity.position.Y), 0.5f)
+                .tweenPositionTo(new Vector2(180f, entity.position.Y),3.5f)
                 .setEaseType(Nez.Tweens.EaseType.SineOut)
                 .setCompletionHandler((a) =>
                 {
-                    //spawn player;
-                    var scene = (GameScene)entity.scene;
-                    scene.player = new Player(scene.inputs[0], scene.tiles, scene.collisionLayer, scene.followEntity, new Vector2(300f, 300f));
-                    scene.player.position = entity.position + Util.TiledPositionHelper.tiledCenteringVec;
-                    scene.followEntity.position = scene.player.position;
-                    scene.addEntity(scene.player);
-                    drivingIn = false;
+                    //fade out to Title
+                    Core.schedule(2f, (t) => Core.startSceneTransition(new FadeTransition(() => new TitleScene())));
+                    
                 })
                 .start();
         }
@@ -104,7 +105,7 @@ namespace GGJ2019.Components
                .setEaseType(Nez.Tweens.EaseType.SineIn)
                .setCompletionHandler((a) =>
                {
-                   Core.scene = new TitleScene();
+                   Core.scene = new HomeScene();
                })
                .start();
         }

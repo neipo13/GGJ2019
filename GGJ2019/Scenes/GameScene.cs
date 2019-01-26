@@ -67,7 +67,7 @@ namespace GGJ2019.Scenes
             noHit.physicsLayer = Constants.PhysicsLayers.noHit;
             var spawnObj = tiledMap.getObjectGroup("playerSpawn").objects.First();
             followEntity.position = spawnObj.position;
-            car = addEntity(new Car(carSubtextures));
+            car = addEntity(new Car(carSubtextures, false));
 
             followCamera = camera.addComponent(new PlatformSnapFollowCamera(followEntity));
             followCamera.mapSize = new Vector2(tiledMap.widthInPixels, tiledMap.heightInPixels);

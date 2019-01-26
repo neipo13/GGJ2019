@@ -61,6 +61,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scenes\GameScene.cs" />
+    <Compile Include="Scenes\HomeScene.cs" />
     <Compile Include="Scenes\SplashScene.cs" />
     <Compile Include="Scenes\TitleScene.cs" />
     <Compile Include="Util\Input\InputHandler.cs" />

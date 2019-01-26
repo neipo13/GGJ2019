@@ -23,7 +23,7 @@ namespace GGJ2019.Entities
             Move,
             Idle
         }
-        public Car(List<Subtexture> subtextures): base("car")
+        public Car(List<Subtexture> subtextures, bool isHomeScene = false): base("car")
         {
             var sprite = addComponent(new Sprite<CarAnimations>(subtextures[0]));
             sprite.addAnimation(CarAnimations.Move, new SpriteAnimation(subtextures.GetRange(0, 2)));
@@ -36,7 +36,8 @@ namespace GGJ2019.Entities
             trigger.collidesWithLayers = Constants.PhysicsLayers.collect;
 
             position = new Vector2(-200f, (16f * 14f) - 12f);
-            addComponent(new CarController());
+            var controller = new CarController(isHomeScene);
+            addComponent(controller);
         }
     }
 }
