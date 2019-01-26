@@ -20,8 +20,9 @@ namespace GGJ2019.Entities
         public Player(InputHandler input, List<Subtexture> subtextures, TiledTileLayer collisionLayer): base("player")
         {
 
-            var sprite = addComponent(new Sprite<Animations>(subtextures[32]));
+            var sprite = addComponent(new Sprite<Animations>(subtextures[0]));
             sprite.renderLayer = (int)Constants.RenderLayers.Object;
+            
             var animManager = addComponent(new AnimationManager(sprite, subtextures));
             var box = addComponent(new BoxCollider(16, 16));
             box.name = Strings.MoveCollider;

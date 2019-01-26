@@ -38,7 +38,7 @@ namespace GGJ2019
             scene = Scene.createWithDefaultRenderer();
             base.Update(new GameTime());
             base.Draw(new GameTime());
-            scene = new TitleScene();
+            scene = new GameScene();
         }
     }
 }

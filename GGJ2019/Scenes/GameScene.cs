@@ -20,7 +20,8 @@ namespace GGJ2019.Scenes
         InputHandler[] inputs;
 
 
-        public List<Subtexture> subtextures;
+        public List<Subtexture> tiles;
+        public List<Subtexture> characters;
         PlatformSnapFollowCamera followCamera;
 
         public override void initialize()
@@ -41,7 +42,9 @@ namespace GGJ2019.Scenes
 
             //load textures
             var texture = content.Load<Texture2D>("img/basic-prototyping");
-            subtextures = Subtexture.subtexturesFromAtlas(texture, 16, 16);
+            tiles = Subtexture.subtexturesFromAtlas(texture, 16, 16);
+            var t2 = content.Load<Texture2D>("img/characters");
+            characters = Subtexture.subtexturesFromAtlas(t2, 32, 32);
 
             //load tiled
             var tiledMap = content.Load<TiledMap>($"tiled/level");
@@ -52,7 +55,7 @@ namespace GGJ2019.Scenes
             tileMapComponent.physicsLayer = PhysicsLayers.tiles;
             var collisionLayer = tileMapComponent.collisionLayer;
 
-            var player = new Player(inputs[0], subtextures, collisionLayer);
+            var player = new Player(inputs[0], characters, collisionLayer);
             var spawnObj = tiledMap.getObjectGroup("playerSpawn").objects.First();
             player.position = spawnObj.position + Util.TiledPositionHelper.tiledCenteringVec;
             addEntity(player);
