@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework;
 
 namespace GGJ2019.Components
 {
-    public class McGuffinController : Component, ITriggerListener, ITriggerListener
+    public class McGuffinController : Component, ITriggerListener, IUpdatable
     {
         bool collected = false;
         bool doneAnimating = false;

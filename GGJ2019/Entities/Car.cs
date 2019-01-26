@@ -36,6 +36,7 @@ namespace GGJ2019.Entities
             trigger.collidesWithLayers = Constants.PhysicsLayers.collect;
 
             position = new Vector2(-200f, (16f * 14f) - 12f);
+            addComponent(new CarController());
         }
     }
 }

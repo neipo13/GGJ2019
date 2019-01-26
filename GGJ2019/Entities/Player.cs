@@ -34,7 +34,7 @@ namespace GGJ2019.Entities
             box.collidesWithLayers = PhysicsLayers.tiles;
             addComponent(new TiledMapMover(collisionLayer));
             var playerController = addComponent(new PlayerController(input, followEntity));
-            playerController.velocity = velocity;
+            playerController.velocity = new Vector2(2000f, 2000f);
 
             var collectionBox = addComponent(new BoxCollider(12, 12));
             collectionBox.isTrigger = true;

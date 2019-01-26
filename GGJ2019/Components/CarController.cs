@@ -27,6 +27,7 @@ namespace GGJ2019.Components
         {
             base.onAddedToEntity();
             sprite = entity.getComponent<Sprite<CarAnimations>>();
+            crashIn();
         }
 
         public void onTriggerEnter(Collider other, Collider local)
@@ -49,8 +50,8 @@ namespace GGJ2019.Components
         {
             //tween in & spawn player at end
             entity
-                .tweenPositionTo(new Vector2(driveInLocation, entity.position.Y), 0.2f)
-                .setEaseType(Nez.Tweens.EaseType.BounceInOut)
+                .tweenPositionTo(new Vector2(driveInLocation, entity.position.Y), 0.5f)
+                .setEaseType(Nez.Tweens.EaseType.SineOut)
                 .setCompletionHandler((a) =>
                 {
                     //spawn player;

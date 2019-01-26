@@ -63,11 +63,14 @@ namespace GGJ2019.Scenes
             followEntity = addEntity(new Entity());
             var noHit = followEntity.addComponent<CircleCollider>();
             noHit.physicsLayer = Constants.PhysicsLayers.noHit;
-            var car = new Car(carSubtextures);
+            var spawnObj = tiledMap.getObjectGroup("playerSpawn").objects.First();
+            followEntity.position = spawnObj.position;
+            var car = addEntity(new Car(carSubtextures));
 
             followCamera = camera.addComponent(new PlatformSnapFollowCamera(followEntity));
             followCamera.mapSize = new Vector2(tiledMap.widthInPixels, tiledMap.heightInPixels);
             followCamera.mapLockEnabled = true;
+            camera.position = new Vector2(0f, 500f);
 
             var mcGufObj = tiledMap.getObjectGroup("mcguffin").objects.First();
             var mcGuffin = new McGuffin(tiles);
