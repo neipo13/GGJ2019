@@ -26,6 +26,8 @@ namespace GGJ2019.Scenes
         PlatformSnapFollowCamera followCamera;
         public TiledTileLayer collisionLayer;
         public Entity followEntity;
+        public Player player;
+        public Car car;
 
         public override void initialize()
         {
@@ -65,7 +67,7 @@ namespace GGJ2019.Scenes
             noHit.physicsLayer = Constants.PhysicsLayers.noHit;
             var spawnObj = tiledMap.getObjectGroup("playerSpawn").objects.First();
             followEntity.position = spawnObj.position;
-            var car = addEntity(new Car(carSubtextures));
+            car = addEntity(new Car(carSubtextures));
 
             followCamera = camera.addComponent(new PlatformSnapFollowCamera(followEntity));
             followCamera.mapSize = new Vector2(tiledMap.widthInPixels, tiledMap.heightInPixels);

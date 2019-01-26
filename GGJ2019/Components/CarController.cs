@@ -17,17 +17,27 @@ using static GGJ2019.Entities.Car;
 
 namespace GGJ2019.Components
 {
-    public class CarController : Component, ITriggerListener
+    public class CarController : Component, ITriggerListener, IUpdatable
     {
-        bool drivingIn, headingHome = false;
+        public bool drivingIn, headingHome, homeScene = false;
         Sprite<CarAnimations> sprite;
         float driveInLocation = 70f;
+        ColliderTriggerHelper triggerHelper;
 
         public override void onAddedToEntity()
         {
             base.onAddedToEntity();
             sprite = entity.getComponent<Sprite<CarAnimations>>();
-            crashIn();
+            if (homeScene)
+            {
+                sprite.flipX = true;
+                driveUp();
+            }
+            else
+            {
+                crashIn();
+            }
+            triggerHelper = new ColliderTriggerHelper(entity);
         }
 
         public void onTriggerEnter(Collider other, Collider local)
@@ -56,22 +66,52 @@ namespace GGJ2019.Components
                 {
                     //spawn player;
                     var scene = (GameScene)entity.scene;
-                    var player = new Player(scene.inputs[0], scene.tiles, scene.collisionLayer, scene.followEntity, new Vector2(300f, 300f));
-                    player.position = entity.position + Util.TiledPositionHelper.tiledCenteringVec;
-                    scene.followEntity.position = player.position;
-                    scene.addEntity(player);
+                    scene.player = new Player(scene.inputs[0], scene.tiles, scene.collisionLayer, scene.followEntity, new Vector2(300f, 300f));
+                    scene.player.position = entity.position + Util.TiledPositionHelper.tiledCenteringVec;
+                    scene.followEntity.position = scene.player.position;
+                    scene.addEntity(scene.player);
+                    drivingIn = false;
                 })
                 .start();
 
         }
+
+        public void driveUp()
+        {
+            entity.position = new Vector2(500f, 96f);
+            entity
+                .tweenPositionTo(new Vector2(driveInLocation, entity.position.Y), 0.5f)
+                .setEaseType(Nez.Tweens.EaseType.SineOut)
+                .setCompletionHandler((a) =>
+                {
+                    //spawn player;
+                    var scene = (GameScene)entity.scene;
+                    scene.player = new Player(scene.inputs[0], scene.tiles, scene.collisionLayer, scene.followEntity, new Vector2(300f, 300f));
+                    scene.player.position = entity.position + Util.TiledPositionHelper.tiledCenteringVec;
+                    scene.followEntity.position = scene.player.position;
+                    scene.addEntity(scene.player);
+                    drivingIn = false;
+                })
+                .start();
+        }
+
         public void leave()
         {
-
+            var scene = (GameScene)entity.scene;
+            scene.player.enabled = false;
+            entity
+               .tweenPositionTo(new Vector2(-driveInLocation, entity.position.Y), 2.5f)
+               .setEaseType(Nez.Tweens.EaseType.SineIn)
+               .setCompletionHandler((a) =>
+               {
+                   Core.scene = new TitleScene();
+               })
+               .start();
         }
 
         public void update()
         {
+            triggerHelper.update();
         }
-
     }
 }

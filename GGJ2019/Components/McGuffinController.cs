@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Nez;
 using Microsoft.Xna.Framework;
+using GGJ2019.Scenes;
 
 namespace GGJ2019.Components
 {
@@ -38,6 +39,9 @@ namespace GGJ2019.Components
                 local.active = false;
                 var pc = player.getComponent<PlayerController>();
                 pc.turnOff();
+                var car = ((GameScene)entity.scene).car;
+                var cc = car.getComponent<CarController>();
+                cc.headingHome = true;
                 var finalPos = entity.position - new Vector2(0, 32);
                 entity
                     .tweenPositionTo(entity.position - new Vector2(0f, 80f), 0.3f)
