@@ -15,8 +15,12 @@ namespace GGJ2019.Components
         {
             PlayerIdle,
             PlayerRun,
+            PlayerCalmIdle,
+            PlayerCalmRun,
+            PlayerSigh,
             GreenIdle,
-            GreenRun
+            GreenRun,
+            McGuffin
         }
 
         public Sprite<Animations> sprite;
@@ -34,7 +38,42 @@ namespace GGJ2019.Components
             var runSpriteAnim = new SpriteAnimation(subtextures.GetRange(36, 5));
             runSpriteAnim.fps = 16;
             var runAnim = sprite.addAnimation(Animations.PlayerRun, runSpriteAnim);
-            var idleAnim = sprite.addAnimation(Animations.PlayerIdle, new SpriteAnimation(subtextures.GetRange(32, 4)));
+            var calmRunSpriteAnim = new SpriteAnimation(subtextures.GetRange(36, 5));
+            calmRunSpriteAnim.fps = 8;
+            sprite.addAnimation(Animations.PlayerCalmRun, calmRunSpriteAnim);
+            sprite.addAnimation(Animations.PlayerIdle, new SpriteAnimation(subtextures.GetRange(32, 4)));
+            var calmIdle = new SpriteAnimation(new List<Subtexture>(){
+                subtextures[32],
+                subtextures[32],
+                subtextures[32],
+                subtextures[32],
+                subtextures[32],
+                subtextures[32],
+                subtextures[32],
+                subtextures[33],
+                subtextures[34],
+                subtextures[34],
+                subtextures[34],
+                subtextures[34],
+                subtextures[34],
+                subtextures[35] });
+            calmIdle.fps = 8;
+            sprite.addAnimation(Animations.PlayerCalmIdle, calmIdle);
+            sprite.addAnimation(Animations.McGuffin, new SpriteAnimation(subtextures.GetRange(19, 6)));
+
+            var sigh = new SpriteAnimation(new List<Subtexture>()
+            {
+                subtextures[34],
+                subtextures[34],
+                subtextures[33],
+                subtextures[32],
+                subtextures[32],
+                subtextures[32],
+                subtextures[32],
+                subtextures[34]
+            });
+            sigh.setLoop(false);
+            sprite.addAnimation(Animations.PlayerSigh, sigh);
         }
 
         public override void onRemovedFromEntity()

@@ -1,5 +1,6 @@
 ﻿using GGJ2019.Constants;
 using GGJ2019.Entities;
+using GGJ2019.Scenes;
 using GGJ2019.Util.Input;
 using Microsoft.Xna.Framework;
 using Nez;
@@ -28,6 +29,8 @@ namespace GGJ2019.Components
         Entity followEntity;
         Vector2 followDistance = new Vector2(60f, 0f);
         bool angled = false;
+        bool rotatesForJumps = true;
+        bool collectedItem, headingHome, inCar = false;
 
         Direction direction = Direction.Right;
         ColliderTriggerHelper triggerHelper;
@@ -43,7 +46,8 @@ namespace GGJ2019.Components
         Vector2 maxSpeedVec;
         bool isGrounded => collisionState.below;
         bool isMovingHorizontal => velocity.X > 0f || velocity.X < 0f;
-        float jumpHeight = 16 * 5 + 4; //16px tiles * tiles high + buffer
+        float jumpTilesHigh = 5;
+        float jumpHeight => 16 * jumpTilesHigh + 4; //16px tiles * tiles high + buffer
         bool canJumpThisFrame
         {
             get { return collisionState.below || (offGroundInputBufferTimer > 0 && justJumpedBufferTimer <= 0); }
@@ -83,8 +87,26 @@ namespace GGJ2019.Components
         public void update()
         {
             if (Time.timeScale < 0.1f) return;
-            move();
-            triggerHelper.update();
+            if(!collectedItem && !headingHome && !inCar)
+            {
+                updateNormal();
+            }
+            else if(!headingHome && !inCar)
+            { 
+                velocity.Y += gravity * Time.deltaTime;
+
+                velocity = Vector2.Clamp(velocity, -maxSpeedVec, maxSpeedVec);
+                mover.move(velocity * Time.deltaTime, moveBox, collisionState);
+            }
+            else if(!inCar)
+            {
+                updateCalm();
+            }
+
+        }
+
+        void flipSprites()
+        {
             if (velocity.X > 0)
             {
                 sprite.flipX = false;
@@ -99,7 +121,7 @@ namespace GGJ2019.Components
                 weaponSprite.localOffset = new Vector2(-6f, 2f);
                 followEntity.position = entity.position - followDistance;
             }
-            if(input.YInput < 0f)
+            if (input.YInput < 0f)
             {
                 angled = true;
                 if (sprite.flipX)
@@ -115,6 +137,13 @@ namespace GGJ2019.Components
             {
                 angled = false;
             }
+        }
+
+        public void updateNormal()
+        {
+            move();
+            triggerHelper.update();
+            flipSprites();
 
             if (!isGrounded || !isMovingHorizontal)
             {
@@ -134,7 +163,6 @@ namespace GGJ2019.Components
                 }
                 var bullet = entity.scene.addEntity(new Bullet(lr, angled, entity.position));
             }
-
         }
        
 
@@ -202,7 +230,7 @@ namespace GGJ2019.Components
                 sprite.rotation = 0;
                 weaponSprite.rotation = 0;
             }
-            else
+            else if(rotatesForJumps)
             {
                 sprite.rotation += (float)Math.PI / 8 * (sprite.flipX ? -1 : 1);
                 weaponSprite.rotation = sprite.rotation;
@@ -255,6 +283,50 @@ namespace GGJ2019.Components
                 {
                     direction = Direction.Up;
                 }
+            }
+        }
+
+        public void turnOff()
+        {
+            collectedItem = true;
+            entity.removeComponent(weaponSprite);
+            velocity = new Vector2();
+            sprite.rotation = 0f;
+            sprite.flipX = false;
+
+        }
+
+        public void calmDown()
+        {
+            animationManager.Play(Animations.PlayerSigh);
+            sprite.onAnimationCompletedEvent += sighOver;
+            moveSpeed /= 3f;
+            rotatesForJumps = false;
+            jumpTilesHigh = 3;
+            
+        }
+
+        public void sighOver(Animations anim)
+        {
+            //add the sigh sprite
+            var scene = (GameScene)entity.scene;
+            var sigh = entity.scene.addEntity(new Sigh(scene.tiles));
+            sigh.position = entity.position;
+            sprite.onAnimationCompletedEvent -= sighOver;
+            Core.schedule(2f, (t) => headingHome = true);
+        }
+
+        void updateCalm()
+        {
+            move();
+            flipSprites();
+            if (!isGrounded || !isMovingHorizontal)
+            {
+                animationManager.Play(Animations.PlayerCalmIdle);
+            }
+            else if (isGrounded && isMovingHorizontal)
+            {
+                animationManager.Play(Animations.PlayerCalmRun);
             }
         }
     }

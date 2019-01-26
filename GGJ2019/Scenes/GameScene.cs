@@ -68,6 +68,11 @@ namespace GGJ2019.Scenes
             followCamera.mapSize = new Vector2(tiledMap.widthInPixels, tiledMap.heightInPixels);
             followCamera.mapLockEnabled = true;
 
+            var mcGufObj = tiledMap.getObjectGroup("mcguffin").objects.First();
+            var mcGuffin = new McGuffin(tiles);
+            mcGuffin.position = mcGufObj.position + Util.TiledPositionHelper.tiledCenteringVec;
+            addEntity(mcGuffin);
+
         }
     }
 }

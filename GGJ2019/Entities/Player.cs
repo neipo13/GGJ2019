@@ -33,6 +33,11 @@ namespace GGJ2019.Entities
             box.collidesWithLayers = PhysicsLayers.tiles;
             addComponent(new TiledMapMover(collisionLayer));
             var playerController = addComponent(new PlayerController(input, followEntity));
+
+            var collectionBox = addComponent(new BoxCollider(12, 12));
+            collectionBox.isTrigger = true;
+            collectionBox.physicsLayer = PhysicsLayers.collect;
+            collectionBox.collidesWithLayers = PhysicsLayers.mcguff;
             
         }
     }
