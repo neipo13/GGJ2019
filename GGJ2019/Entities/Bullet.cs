@@ -20,10 +20,26 @@ namespace GGJ2019.Entities
     {
         public const float bulletSpeed = 500f;
 
-        public Bullet(Direction dir) : base("bullet")
+        public Bullet(Direction dir, bool angled, Vector2 position) : base("bullet")
         {
+            this.position = position ; 
             float x = bulletSpeed * (dir == Direction.Left ? -1 : 1);
-            var mover = addComponent(new BulletController(new Vector2(x, 0), (r) => this.destroy()));
+            Vector2 vel = new Vector2(x, 0);
+            
+            if (angled)
+            {
+                vel = new Vector2(x, -Math.Abs(x/2f));
+                if(x > 0f)
+                {
+                    this.position = position + new Vector2(4f, 8f);
+                }
+                else
+                {
+                    this.position = position + new Vector2(-4f, 4f);
+                }
+                
+            }
+            var mover = addComponent(new BulletController(vel, (r) => this.destroy()));
 
             var wallCollider = addComponent(new BoxCollider(16, 8));
             wallCollider.physicsLayer = PhysicsLayers.move;
@@ -39,6 +55,18 @@ namespace GGJ2019.Entities
             var bs = addComponent(new PrototypeSprite(16, 8));
             bs.renderLayer = (int)Constants.RenderLayers.Object;
             bs.color = new Color(244, 180, 27);
+            bs.followParentEntityRotation = false;
+            if (angled)
+            {
+                if(x > 0f)
+                {
+                    bs.rotation = -(float)Math.PI / 8f;
+                }
+                else
+                {
+                    bs.rotation = (float)Math.PI / 8f;
+                }
+            }
         }
     }
 }

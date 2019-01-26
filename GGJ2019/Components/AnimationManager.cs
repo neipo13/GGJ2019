@@ -31,11 +31,10 @@ namespace GGJ2019.Components
         {
             base.onAddedToEntity();
 
-            var runSpriteAnim = new SpriteAnimation(subtextures.GetRange(4, 5));
+            var runSpriteAnim = new SpriteAnimation(subtextures.GetRange(36, 5));
             runSpriteAnim.fps = 16;
             var runAnim = sprite.addAnimation(Animations.PlayerRun, runSpriteAnim);
-            var idleAnim = sprite.addAnimation(Animations.PlayerIdle, new SpriteAnimation(subtextures.GetRange(0, 4)));
-            
+            var idleAnim = sprite.addAnimation(Animations.PlayerIdle, new SpriteAnimation(subtextures.GetRange(32, 4)));
         }
 
         public override void onRemovedFromEntity()

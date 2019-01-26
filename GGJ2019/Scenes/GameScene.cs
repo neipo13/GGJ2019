@@ -55,12 +55,16 @@ namespace GGJ2019.Scenes
             tileMapComponent.physicsLayer = PhysicsLayers.tiles;
             var collisionLayer = tileMapComponent.collisionLayer;
 
-            var player = new Player(inputs[0], characters, collisionLayer);
+            var followEntity = addEntity(new Entity());
+            var noHit = followEntity.addComponent<CircleCollider>();
+            noHit.physicsLayer = Constants.PhysicsLayers.noHit;
+            var player = new Player(inputs[0], tiles, collisionLayer, followEntity);
             var spawnObj = tiledMap.getObjectGroup("playerSpawn").objects.First();
             player.position = spawnObj.position + Util.TiledPositionHelper.tiledCenteringVec;
+            followEntity.position = player.position;
             addEntity(player);
 
-            followCamera = camera.addComponent(new PlatformSnapFollowCamera(player));
+            followCamera = camera.addComponent(new PlatformSnapFollowCamera(followEntity));
             followCamera.mapSize = new Vector2(tiledMap.widthInPixels, tiledMap.heightInPixels);
             followCamera.mapLockEnabled = true;
 

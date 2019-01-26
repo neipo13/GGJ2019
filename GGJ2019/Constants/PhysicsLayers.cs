@@ -14,5 +14,6 @@ namespace GGJ2019.Constants
         public const int enemyHit = 1 << 3;
         public const int playerBullet = 1 << 4;
         public const int enemyBullet = 1 << 5;
+        public const int noHit = 1 << 6;
     }
 }

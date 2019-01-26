@@ -1,4 +1,5 @@
-﻿using GGJ2019.Entities;
+﻿using GGJ2019.Constants;
+using GGJ2019.Entities;
 using GGJ2019.Util.Input;
 using Microsoft.Xna.Framework;
 using Nez;
@@ -20,9 +21,13 @@ namespace GGJ2019.Components
         TiledMapMover.CollisionState collisionState = new TiledMapMover.CollisionState();
         BoxCollider moveBox;
         Sprite<Animations> sprite;
+        Sprite weaponSprite;
         AnimationManager animationManager;
         BoxCollider hitBox;
         InputHandler input;
+        Entity followEntity;
+        Vector2 followDistance = new Vector2(60f, 0f);
+        bool angled = false;
 
         Direction direction = Direction.Right;
         ColliderTriggerHelper triggerHelper;
@@ -49,9 +54,10 @@ namespace GGJ2019.Components
         int landingInputBufferTimer = 0;
         int justJumpedBufferTimer = 0;
 
-        public PlayerController(InputHandler input)
+        public PlayerController(InputHandler input, Entity followEntity)
         {
             this.input = input;
+            this.followEntity = followEntity;
         }
 
         public override void onAddedToEntity()
@@ -59,12 +65,14 @@ namespace GGJ2019.Components
             mover = entity.getComponent<TiledMapMover>();
             animationManager = entity.getComponent<AnimationManager>();
             sprite = animationManager.sprite;
+            weaponSprite = entity.getComponents<Sprite>().First((s) => s.name == Strings.Weapon);
             var boxes = entity.getComponents<BoxCollider>();
             moveBox = boxes.FirstOrDefault(c => c.name == Constants.Strings.MoveCollider);
             hitBox = boxes.FirstOrDefault(c => c.name == Constants.Strings.HitCollider);
             velocity = Vector2.Zero;
             maxSpeedVec = new Vector2(moveSpeed * 2f, moveSpeed * 3f);
             triggerHelper = new ColliderTriggerHelper(entity);
+            animationManager.Play(Animations.PlayerIdle);
         }
 
         public void OnGameOver()
@@ -80,10 +88,32 @@ namespace GGJ2019.Components
             if (velocity.X > 0)
             {
                 sprite.flipX = false;
+                weaponSprite.flipX = false;
+                weaponSprite.localOffset = new Vector2(6f, 2f);
+                followEntity.position = entity.position + followDistance;
             }
             else if (velocity.X < 0)
             {
                 sprite.flipX = true;
+                weaponSprite.flipX = true;
+                weaponSprite.localOffset = new Vector2(-6f, 2f);
+                followEntity.position = entity.position - followDistance;
+            }
+            if(input.YInput < 0f)
+            {
+                angled = true;
+                if (sprite.flipX)
+                {
+                    weaponSprite.rotation = (float)Math.PI / 8f;
+                }
+                else
+                {
+                    weaponSprite.rotation = -(float)Math.PI / 8f;
+                }
+            }
+            else
+            {
+                angled = false;
             }
 
             if (!isGrounded || !isMovingHorizontal)
@@ -102,8 +132,7 @@ namespace GGJ2019.Components
                 {
                     lr = Direction.Left;
                 }
-                var bullet = entity.scene.addEntity(new Bullet(lr));
-                bullet.position = entity.position;
+                var bullet = entity.scene.addEntity(new Bullet(lr, angled, entity.position));
             }
 
         }
@@ -171,10 +200,12 @@ namespace GGJ2019.Components
             if (collisionState.below)
             {
                 sprite.rotation = 0;
+                weaponSprite.rotation = 0;
             }
             else
             {
                 sprite.rotation += (float)Math.PI / 8 * (sprite.flipX ? -1 : 1);
+                weaponSprite.rotation = sprite.rotation;
             }
 
             var leftSide = entity.position.X - moveBox.width / 2;
