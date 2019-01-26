@@ -12,11 +12,8 @@ namespace GGJ2019.Util.Input
     {
         VirtualIntegerAxis _xAxisInput;
         VirtualIntegerAxis _yAxisInput;
-        VirtualButton _button1;
-        VirtualButton _button2;
-        VirtualButton _button3;
-        VirtualButton _button4;
-        VirtualButton _button5;
+        VirtualButton _jumpButton;
+        VirtualButton _shootButton;
 
         Vector2 _previousAxialInput;
         Vector2 _axialInput; //utility vec2 to hold input values without constantly creating/destroying vec2s
@@ -36,43 +33,22 @@ namespace GGJ2019.Util.Input
 
         public float YInput => _yAxisInput.value;
 
-        public VirtualButton Button1Input
+        public VirtualButton JumpButtonInput
         {
             get
             {
-                return _button1;
+                return _jumpButton;
             }
         }
-        public VirtualButton Button2Input
+        public VirtualButton ShootButtonInput
         {
             get
             {
-                return _button2;
-            }
-        }
-        public VirtualButton Button3Input
-        {
-            get
-            {
-                return _button3;
-            }
-        }
-        public VirtualButton Button4Input
-        {
-            get
-            {
-                return _button4;
-            }
-        }
-        public VirtualButton Button5Input
-        {
-            get
-            {
-                return _button5;
+                return _shootButton;
             }
         }
 
-        public bool AnyButtonPressed => Button1Input.isPressed || Button2Input.isPressed || Button3Input.isPressed || Button4Input.isPressed || Button5Input.isPressed;
+        public bool AnyButtonPressed => JumpButtonInput.isPressed || ShootButtonInput.isPressed;
 
         public InputHandler(int index)
         {
@@ -116,14 +92,25 @@ namespace GGJ2019.Util.Input
             }
 
             //action buttons
-            _button1 = new VirtualButton();
-            foreach (var key in mapping.key1)
+            _jumpButton = new VirtualButton();
+            foreach (var key in mapping.jumpKey)
             {
-                _button1.nodes.Add(new Nez.VirtualButton.KeyboardKey((Keys)key));
+                _jumpButton.nodes.Add(new Nez.VirtualButton.KeyboardKey((Keys)key));
             }
-            foreach (var button in mapping.button1)
+            foreach (var button in mapping.jumpButton)
             {
-                _button1.nodes.Add(new Nez.VirtualButton.GamePadButton(gamepadIndex, (Buttons)button));
+                _jumpButton.nodes.Add(new Nez.VirtualButton.GamePadButton(gamepadIndex, (Buttons)button));
+            }
+
+
+            _shootButton = new VirtualButton();
+            foreach (var key in mapping.shootKey)
+            {
+                _shootButton.nodes.Add(new Nez.VirtualButton.KeyboardKey((Keys)key));
+            }
+            foreach (var button in mapping.shootButton)
+            {
+                _shootButton.nodes.Add(new Nez.VirtualButton.GamePadButton(gamepadIndex, (Buttons)button));
             }
         }
     }

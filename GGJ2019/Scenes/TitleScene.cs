@@ -18,6 +18,8 @@ namespace GGJ2019.Scenes
         Entity entity;
         UICanvas canvas;
 
+        bool transitioning = false;
+
         public override void initialize()
         {
             // required renderer stuff
@@ -39,10 +41,10 @@ namespace GGJ2019.Scenes
             canvas = entity.addComponent(new UICanvas());
             canvas.setRenderLayer((int)RenderLayers.UI);
             var style = new LabelStyle(new Color(223, 246, 245));
-            var title = new EffectLabel("GGJ 2019", style)
+            var title = new EffectLabel("/1MERCENARY/1", style)
                 .setAlignment(Align.center)
                 .setFontScale(3f);
-            var pressStart = new EffectLabel("/2Press /6Z/6 or /6J/6 to Start/2", style)
+            var pressStart = new EffectLabel("/2Press /6[action]/6 to Start/2", style)
                 .setAlignment(Align.center);
             canvas
                 .stage
@@ -54,6 +56,17 @@ namespace GGJ2019.Scenes
                 .addElement(pressStart)
                 .setX(NezGame.designWidth / 2)
                 .setY(NezGame.designHeight * 3 / 4);
+        }
+
+        public override void update()
+        {
+            base.update();
+
+            if(!transitioning && inputs.Any((i) => i.AnyButtonPressed))
+            {
+                transitioning = true;
+                Core.scene = new GameScene();
+            }
         }
     }
 }

@@ -28,8 +28,8 @@
 /processorParam:TextureFormat=Color
 /build:img/basic-prototyping.png
 
-#begin tiled/makeSureTiledImports.tmx
+#begin tiled/level.tmx
 /importer:TiledMapImporter
 /processor:TiledMapProcessor
-/build:tiled/makeSureTiledImports.tmx
+/build:tiled/level.tmx
 

@@ -7,15 +7,9 @@
         public int[] Right { get; set; }
         public int[] Up { get; set; }
         public int[] Down { get; set; }
-        public int[] key1 { get; set; }
-        public int[] button1 { get; set; }
-        public int[] key2 { get; set; }
-        public int[] button2 { get; set; }
-        public int[] key3 { get; set; }
-        public int[] button3 { get; set; }
-        public int[] key4 { get; set; }
-        public int[] button4 { get; set; }
-        public int[] key5 { get; set; }
-        public int[] button5 { get; set; }
+        public int[] jumpKey { get; set; }
+        public int[] jumpButton { get; set; }
+        public int[] shootKey { get; set; }
+        public int[] shootButton { get; set; }
     }
 }
