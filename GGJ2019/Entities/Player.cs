@@ -41,6 +41,12 @@ namespace GGJ2019.Entities
             collectionBox.isTrigger = true;
             collectionBox.physicsLayer = PhysicsLayers.collect;
             collectionBox.collidesWithLayers = PhysicsLayers.mcguff;
+
+            var hurtBox = addComponent(new BoxCollider(12, 12));
+            hurtBox.isTrigger = true;
+            hurtBox.physicsLayer = Constants.PhysicsLayers.playerHit;
+            hurtBox.collidesWithLayers = Constants.PhysicsLayers.enemyBullet;
+            hurtBox.name = Constants.Strings.HitCollider;
             
         }
     }

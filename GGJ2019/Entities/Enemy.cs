@@ -40,10 +40,16 @@ namespace GGJ2019.Entities
 
             addComponent(new TiledMapMover(collisionLayer));
 
-            var hitBox = addComponent(new BoxCollider(16, 14));
-            hitBox.name = Strings.HitCollider;
-            hitBox.physicsLayer = PhysicsLayers.enemyHit;
-            hitBox.collidesWithLayers = PhysicsLayers.playerBullet;
+            var hurtBox = addComponent(new BoxCollider(16, 14));
+            hurtBox.name = Strings.HitCollider;
+            hurtBox.physicsLayer = PhysicsLayers.enemyHit;
+            hurtBox.collidesWithLayers = PhysicsLayers.playerBullet;
+            hurtBox.isTrigger = true;
+
+            var hitBox = addComponent(new BoxCollider(16, 12));
+            hitBox.name = Strings.AttackCollider;
+            hitBox.physicsLayer = PhysicsLayers.enemyBullet;
+            hitBox.collidesWithLayers = PhysicsLayers.playerHit;
             hitBox.isTrigger = true;
 
 
@@ -66,17 +72,17 @@ namespace GGJ2019.Entities
             var gs = (GameScene)scene;
             //debris
             var collisionLayer = gs.collisionLayer;
-            int debris = Nez.Random.range(3, 6);
+            int debris = Nez.Random.range(5, 9);
             for(int i = 0; i < debris; i++)
             {
-                gs.addEntity(new Debris(collisionLayer, this.position - new Vector2(0f, 10f)));
+                gs.addEntity(new Debris(collisionLayer, this.position - new Vector2(0f, 10f), gs.tiles));
             }
 
             //explosions
-            int explosions = Nez.Random.range(2, 5);
+            int explosions = Nez.Random.range(3,5);
             for(int i = 0; i < explosions; i++)
             {
-                float timeOffset = Nez.Random.range(0f, 0.3f);
+                float timeOffset = Nez.Random.range(0f, 0.15f);
                 float x = Nez.Random.range(-20f, 20f);
                 float y = Nez.Random.range(-20f, 20f);
                 Vector2 offset = new Vector2(x, y);

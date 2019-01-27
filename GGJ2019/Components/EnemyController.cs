@@ -65,8 +65,11 @@ namespace GGJ2019.Components
 
         public void onTriggerEnter(Collider other, Collider local)
         {
-            hp?.TakeDamage();
-            other.entity.destroy();
+            if(other.entity.name == "bullet")
+            {
+                hp?.TakeDamage();
+                other.entity.destroy();
+            }
         }
 
         public void onTriggerExit(Collider other, Collider local)

@@ -16,7 +16,7 @@ using static GGJ2019.Components.AnimationManager;
 
 namespace GGJ2019.Components
 {
-    public class PlayerController : Component, IUpdatable
+    public class PlayerController : Component, IUpdatable, ITriggerListener
     {
         TiledMapMover mover;
         TiledMapMover.CollisionState collisionState = new TiledMapMover.CollisionState();
@@ -24,13 +24,17 @@ namespace GGJ2019.Components
         Sprite<Animations> sprite;
         Sprite weaponSprite;
         AnimationManager animationManager;
-        BoxCollider hitBox;
+        BoxCollider hurtBox;
         InputHandler input;
         Entity followEntity;
         Vector2 followDistance = new Vector2(60f, 0f);
         bool angled = false;
         bool rotatesForJumps = true;
         bool collectedItem, headingHome, inCar = false;
+        bool gotHit;
+        float hitStunTimer = 0f;
+        const float hitStunTime = 0.3f;
+        readonly Vector2 hitStunForce = new Vector2(100f, -200f);
 
         Direction direction = Direction.Right;
         ColliderTriggerHelper triggerHelper;
@@ -72,7 +76,7 @@ namespace GGJ2019.Components
             weaponSprite = entity.getComponents<Sprite>().First((s) => s.name == Strings.Weapon);
             var boxes = entity.getComponents<BoxCollider>();
             moveBox = boxes.FirstOrDefault(c => c.name == Constants.Strings.MoveCollider);
-            hitBox = boxes.FirstOrDefault(c => c.name == Constants.Strings.HitCollider);
+            hurtBox = boxes.FirstOrDefault(c => c.name == Constants.Strings.HitCollider);
             //velocity = Vector2.Zero;
             maxSpeedVec = new Vector2(moveSpeed * 2f, moveSpeed * 3f);
             triggerHelper = new ColliderTriggerHelper(entity);
@@ -87,18 +91,22 @@ namespace GGJ2019.Components
         public void update()
         {
             if (Time.timeScale < 0.1f) return;
-            if(!collectedItem && !headingHome && !inCar)
+            if (gotHit)
+            {
+                updateHit();
+            }
+            else if (!collectedItem && !headingHome && !inCar)
             {
                 updateNormal();
             }
-            else if(!headingHome && !inCar)
-            { 
+            else if (!headingHome && !inCar)
+            {
                 velocity.Y += gravity * Time.deltaTime;
 
                 velocity = Vector2.Clamp(velocity, -maxSpeedVec, maxSpeedVec);
                 mover.move(velocity * Time.deltaTime, moveBox, collisionState);
             }
-            else if(!inCar)
+            else if (!inCar)
             {
                 updateCalm();
             }
@@ -164,7 +172,7 @@ namespace GGJ2019.Components
                 var bullet = entity.scene.addEntity(new Bullet(lr, angled, entity.position));
             }
         }
-       
+
 
         public void move()
         {
@@ -218,9 +226,9 @@ namespace GGJ2019.Components
 
             var oldPos = entity.position;
             mover.move(velocity * Time.deltaTime, moveBox, collisionState);
-            
+
             //snap to map x
-            if(entity.position.X < sprite.width / 2)
+            if (entity.position.X < sprite.width / 2)
             {
                 entity.position = new Vector2(sprite.width / 2, entity.position.Y);
             }
@@ -230,7 +238,7 @@ namespace GGJ2019.Components
                 sprite.rotation = 0;
                 weaponSprite.rotation = 0;
             }
-            else if(rotatesForJumps)
+            else if (rotatesForJumps)
             {
                 sprite.rotation += (float)Math.PI / 8 * (sprite.flipX ? -1 : 1);
                 weaponSprite.rotation = sprite.rotation;
@@ -303,7 +311,7 @@ namespace GGJ2019.Components
             moveSpeed /= 3f;
             rotatesForJumps = false;
             jumpTilesHigh = 3;
-            
+
         }
 
         public void sighOver(Animations anim)
@@ -334,6 +342,45 @@ namespace GGJ2019.Components
             {
                 animationManager.Play(Animations.PlayerCalmRun);
             }
+        }
+
+        void updateHit()
+        {
+            animationManager.Play(Animations.PlayerHit);
+            velocity.Y += gravity * Time.deltaTime;
+            mover.move(velocity * Time.deltaTime, moveBox, collisionState);
+            if (hitStunTimer < 0f)
+            {
+                gotHit = false;
+            }
+            hitStunTimer -= Time.deltaTime;
+        }
+
+        public void onTriggerEnter(Collider other, Collider local)
+        {
+            if (local.name == Strings.HitCollider)
+            {
+                //change state
+                gotHit = true;
+                //change sprite
+                animationManager.Play(Animations.PlayerHit);
+                //knockback
+                var lr = local.entity.position.X > other.entity.position.X ? 1 : -1;
+                var force = hitStunForce;
+                force.X *= lr;
+                velocity = force;
+                hitStunTimer = hitStunTime;
+            }
+        }
+
+        public void onTriggerStay(Collider other, Collider local)
+        {
+
+        }
+
+        public void onTriggerExit(Collider other, Collider local)
+        {
+
         }
     }
 }

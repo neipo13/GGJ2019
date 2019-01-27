@@ -7,6 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Nez.Textures;
+using Nez.Sprites;
 
 namespace GGJ2019.Entities
 {
@@ -15,15 +17,16 @@ namespace GGJ2019.Entities
         float maxSpeedX = 200f;
         float maxYSpeed = 500f;
         float minYSpeed = 300f;
-        public Debris(TiledTileLayer collisionLayer, Vector2 position) : base()
+        public Debris(TiledTileLayer collisionLayer, Vector2 position, List<Subtexture> subtextures) : base()
         {
             //get initial vel
             float xSpeed = Nez.Random.range(-maxSpeedX, maxSpeedX);
             float ySpeed = Nez.Random.range(-maxYSpeed, minYSpeed);
             //sprite
-            var sprite = new PrototypeSprite(6, 4);
+            int spriteNum = Nez.Random.range(144, 148);
+            var sprite = new Sprite(subtextures[spriteNum]);
             sprite.renderLayer = (int)Constants.RenderLayers.Decorative;
-            sprite.color = Color.DarkGray;
+            //sprite.color = new Color(90, 83, 83);
             addComponent(sprite);
             //move collide box
             var box = new BoxCollider(4, 4);

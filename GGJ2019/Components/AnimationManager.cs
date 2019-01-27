@@ -79,7 +79,7 @@ namespace GGJ2019.Components
                 subtextures[125],
                 subtextures[125]
             }).setLoop(false).setFps(10));
-            sprite.addAnimation(Animations.PlayerHit, new SpriteAnimation(subtextures[57]));
+            sprite.addAnimation(Animations.PlayerHit, new SpriteAnimation(subtextures[57]).setLoop(true));
         }
 
         public override void onRemovedFromEntity()
