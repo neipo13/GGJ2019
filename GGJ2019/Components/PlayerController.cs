@@ -73,7 +73,7 @@ namespace GGJ2019.Components
             var boxes = entity.getComponents<BoxCollider>();
             moveBox = boxes.FirstOrDefault(c => c.name == Constants.Strings.MoveCollider);
             hitBox = boxes.FirstOrDefault(c => c.name == Constants.Strings.HitCollider);
-            velocity = Vector2.Zero;
+            //velocity = Vector2.Zero;
             maxSpeedVec = new Vector2(moveSpeed * 2f, moveSpeed * 3f);
             triggerHelper = new ColliderTriggerHelper(entity);
             animationManager.Play(Animations.PlayerIdle);
@@ -214,7 +214,7 @@ namespace GGJ2019.Components
             //apply gravity
             velocity.Y += gravity * Time.deltaTime;
 
-            velocity = Vector2.Clamp(velocity, -maxSpeedVec, maxSpeedVec);
+            //velocity = Vector2.Clamp(velocity, -maxSpeedVec, maxSpeedVec);
 
             var oldPos = entity.position;
             mover.move(velocity * Time.deltaTime, moveBox, collisionState);

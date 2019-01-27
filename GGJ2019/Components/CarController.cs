@@ -70,13 +70,13 @@ namespace GGJ2019.Components
                 .setEaseType(Nez.Tweens.EaseType.SineOut)
                 .setCompletionHandler((a) =>
                 {
+                    drivingIn = false;
                     //spawn player;
                     var scene = (GameScene)entity.scene;
-                    scene.player = new Player(scene.inputs[0], scene.tiles, scene.collisionLayer, scene.followEntity, new Vector2(300f, 300f));
-                    scene.player.position = entity.position + Util.TiledPositionHelper.tiledCenteringVec;
+                    scene.player = new Player(scene.inputs[0], scene.tiles, scene.collisionLayer, scene.followEntity, new Vector2(350f, -300f));
+                    scene.player.position = entity.position - new Vector2(0f, 10f);
                     scene.followEntity.position = scene.player.position;
                     scene.addEntity(scene.player);
-                    drivingIn = false;
                     sprite.play(CarAnimations.Idle);
                 })
                 .start();
