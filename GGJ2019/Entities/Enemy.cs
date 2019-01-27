@@ -63,8 +63,17 @@ namespace GGJ2019.Entities
 
         private void onDeath()
         {
-            int explosions = Nez.Random.range(2, 5);
             var gs = (GameScene)scene;
+            //debris
+            var collisionLayer = gs.collisionLayer;
+            int debris = Nez.Random.range(3, 6);
+            for(int i = 0; i < debris; i++)
+            {
+                gs.addEntity(new Debris(collisionLayer, this.position - new Vector2(0f, 10f)));
+            }
+
+            //explosions
+            int explosions = Nez.Random.range(2, 5);
             for(int i = 0; i < explosions; i++)
             {
                 float timeOffset = Nez.Random.range(0f, 0.3f);
@@ -80,5 +89,7 @@ namespace GGJ2019.Entities
             }
             this.destroy();
         }
+
+
     }
 }
