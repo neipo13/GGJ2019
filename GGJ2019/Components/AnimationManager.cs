@@ -18,8 +18,9 @@ namespace GGJ2019.Components
             PlayerCalmIdle,
             PlayerCalmRun,
             PlayerSigh,
-            GreenIdle,
-            GreenRun,
+            RobotIdle,
+            RobotRun,
+            RobotShoot,
             McGuffin
         }
 
@@ -30,11 +31,6 @@ namespace GGJ2019.Components
         {
             this.sprite = sprite;
             this.subtextures = subtextures;
-        }
-        public override void onAddedToEntity()
-        {
-            base.onAddedToEntity();
-
             var runSpriteAnim = new SpriteAnimation(subtextures.GetRange(36, 5));
             runSpriteAnim.fps = 16;
             var runAnim = sprite.addAnimation(Animations.PlayerRun, runSpriteAnim);
@@ -74,6 +70,9 @@ namespace GGJ2019.Components
             });
             sigh.setLoop(false);
             sprite.addAnimation(Animations.PlayerSigh, sigh);
+
+            sprite.addAnimation(Animations.RobotIdle, new SpriteAnimation(subtextures.GetRange(112, 4)));
+            sprite.addAnimation(Animations.RobotRun, new SpriteAnimation(subtextures.GetRange(116, 5)));
         }
 
         public override void onRemovedFromEntity()

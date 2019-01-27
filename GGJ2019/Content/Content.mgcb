@@ -69,3 +69,9 @@
 /processorParam:TextureFormat=Color
 /build:img/house.png
 
+#begin effects/flashWhite.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:effects/flashWhite.fx
+

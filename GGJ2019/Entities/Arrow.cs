@@ -20,13 +20,14 @@ namespace GGJ2019.Entities
         public Arrow(List<Subtexture> subtextures) : base()
         {
             //two sprites
-            var arrowSprite = addComponent(new Sprite(subtextures[25]));
-            var textSprite = addComponent(new Sprite(subtextures[9]));
-            textSprite.localOffset = new Vector2(0, -20f);
+            var arrowSprite = addComponent(new Sprite(subtextures[2]));
+            arrowSprite.scale = new Vector2(2f);
+            arrowSprite.enabled = false;
             //first flashes infrequent - arrow
-            Core.schedule(1f, true, (t) => arrowSprite.enabled = !arrowSprite.enabled);
-            //second flashes more frequent - text
-            Core.schedule(1f, true, (t) => textSprite.enabled = !textSprite.enabled);
+            Core.schedule(2f, (t) => {
+
+                Core.schedule(1.5f, true, (t2) => arrowSprite.enabled = !arrowSprite.enabled);
+            });
         }
     }
 }

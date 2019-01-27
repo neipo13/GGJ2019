@@ -27,7 +27,8 @@ namespace GGJ2019.Entities
             weaponSprite.renderLayer = (int)Constants.RenderLayers.Foreground;
             weaponSprite.name = Strings.Weapon;
             
-            var animManager = addComponent(new AnimationManager(sprite, subtextures));
+            var animManager = new AnimationManager(sprite, subtextures);
+            addComponent(animManager);
             var box = addComponent(new BoxCollider(16, 16));
             box.name = Strings.MoveCollider;
             box.physicsLayer = PhysicsLayers.move;

@@ -79,6 +79,16 @@ namespace GGJ2019.Scenes
             mcGuffin.position = mcGufObj.position + Util.TiledPositionHelper.tiledCenteringVec;
             addEntity(mcGuffin);
 
+            var enemies = tiledMap.getObjectGroup("enemies").objects;
+            foreach(var enemyObj in enemies)
+            {
+                var flashingEffect = content.Load<Effect>("effects/flashWhite");
+                var enemy = new Enemy(tiles, collisionLayer, flashingEffect);
+                enemy.position = enemyObj.position + Util.TiledPositionHelper.tiledCenteringVec;
+                addEntity(enemy);
+
+            }
+
         }
     }
 }

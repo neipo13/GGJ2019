@@ -45,11 +45,14 @@
     <Compile Include="Components\AnimationManager.cs" />
     <Compile Include="Components\BulletController.cs" />
     <Compile Include="Components\CarController.cs" />
+    <Compile Include="Components\EnemyController.cs" />
+    <Compile Include="Components\Health.cs" />
     <Compile Include="Components\McGuffinController.cs" />
     <Compile Include="Components\PlayerController.cs" />
     <Compile Include="Constants\PhysicsLayers.cs" />
     <Compile Include="Constants\RenderLayers.cs" />
     <Compile Include="Constants\Strings.cs" />
+    <Compile Include="Effects\FlashWhiteMaterial.cs" />
     <Compile Include="Entities\Arrow.cs" />
     <Compile Include="Entities\Bullet.cs" />
     <Compile Include="Entities\Car.cs" />
@@ -138,8 +141,9 @@
       <Name>Nez</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Effects\" />
+    <Content Include="Content\effects\flashWhite.fx" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />

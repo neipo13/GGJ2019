@@ -64,6 +64,7 @@ namespace GGJ2019.Components
         public void crashIn()
         {
             //tween in & spawn player at end
+            sprite.play(CarAnimations.Move);
             entity
                 .tweenPositionTo(new Vector2(driveInLocation, entity.position.Y), 0.5f)
                 .setEaseType(Nez.Tweens.EaseType.SineOut)
@@ -76,6 +77,7 @@ namespace GGJ2019.Components
                     scene.followEntity.position = scene.player.position;
                     scene.addEntity(scene.player);
                     drivingIn = false;
+                    sprite.play(CarAnimations.Idle);
                 })
                 .start();
 
@@ -83,6 +85,7 @@ namespace GGJ2019.Components
 
         public void driveUp()
         {
+            sprite.play(CarAnimations.Move);
             entity.position = new Vector2(500f, 96f);
             entity
                 .tweenPositionTo(new Vector2(180f, entity.position.Y),3.5f)
@@ -91,7 +94,8 @@ namespace GGJ2019.Components
                 {
                     //fade out to Title
                     Core.schedule(2f, (t) => Core.startSceneTransition(new FadeTransition(() => new TitleScene())));
-                    
+                    sprite.play(CarAnimations.Idle);
+
                 })
                 .start();
         }
@@ -100,6 +104,7 @@ namespace GGJ2019.Components
         {
             var scene = (GameScene)entity.scene;
             scene.player.enabled = false;
+            sprite.play(CarAnimations.Move);
             entity
                .tweenPositionTo(new Vector2(-driveInLocation, entity.position.Y), 2.5f)
                .setEaseType(Nez.Tweens.EaseType.SineIn)

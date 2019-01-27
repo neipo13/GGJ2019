@@ -316,8 +316,8 @@ namespace GGJ2019.Components
             Core.schedule(2f, (t) =>
             {
                 headingHome = true;
-                var e = new Arrow(scene.tiles);
-                e.position = entity.position + new Vector2(10f, -40f);
+                var e = new Arrow(scene.carSubtextures);
+                e.position = entity.position + new Vector2(30f, -60f);
                 entity.scene.addEntity(e);
             });
         }
