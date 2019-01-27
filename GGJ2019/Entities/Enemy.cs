@@ -22,7 +22,7 @@ namespace GGJ2019.Entities
     {
         FlashWhiteMaterial material;
         AnimationManager animationManager;
-        public Enemy(List<Subtexture> subtextures, TiledTileLayer collisionLayer, Effect flashEffect) : base("enemy")
+        public Enemy(List<Subtexture> subtextures, TiledTileLayer collisionLayer, Effect flashEffect, EnemyType type = EnemyType.Patrol) : base("enemy")
         {
             var sprite = addComponent(new Sprite<Animations>(subtextures[32]));
             sprite.renderLayer = (int)Constants.RenderLayers.Object;
@@ -31,7 +31,18 @@ namespace GGJ2019.Entities
 
             animationManager = new AnimationManager(sprite, subtextures);
             addComponent(animationManager);
-            sprite.play(Animations.RobotIdle);
+            switch (type)
+            {
+                case EnemyType.Turret:
+                    sprite.play(Animations.RobotTurret);
+                    break;
+                case EnemyType.ArcTurret:
+                    sprite.play(Animations.RobotArcTurret);
+                    break;
+                default:
+                    sprite.play(Animations.RobotIdle);
+                    break;
+            }
 
             var box = addComponent(new BoxCollider(16, 16));
             box.name = Strings.MoveCollider;
@@ -55,7 +66,7 @@ namespace GGJ2019.Entities
 
             var hp = new Health(3, onHit, onDeath);
             addComponent(hp);
-            var controller = new EnemyController();
+            var controller = new EnemyController(type);
             addComponent(controller);
 
         }

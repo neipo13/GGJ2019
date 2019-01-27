@@ -87,8 +87,11 @@ namespace GGJ2019.Scenes
             var enemyObjs = tiledMap.getObjectGroup("enemies").objects;
             foreach(var enemyObj in enemyObjs)
             {
+                int type = 0;
+                string typeStr = enemyObj.properties.ContainsKey("EnemyType") ? enemyObj.properties["EnemyType"] : "0";
+                int.TryParse(typeStr, out type);
                 var flashingEffect = content.Load<Effect>("effects/flashWhite");
-                var enemy = new Enemy(tiles, collisionLayer, flashingEffect);
+                var enemy = new Enemy(tiles, collisionLayer, flashingEffect, (Components.EnemyType)type);
                 enemy.position = enemyObj.position + Util.TiledPositionHelper.tiledCenteringVec;
                 addEntity(enemy);
                 enemies.Add(enemy);

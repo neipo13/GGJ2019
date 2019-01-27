@@ -23,6 +23,8 @@ namespace GGJ2019.Components
             RobotRun,
             RobotShoot,
             RobotHit,
+            RobotTurret,
+            RobotArcTurret,
             McGuffin
         }
 
@@ -80,6 +82,9 @@ namespace GGJ2019.Components
                 subtextures[125]
             }).setLoop(false).setFps(10));
             sprite.addAnimation(Animations.PlayerHit, new SpriteAnimation(subtextures[57]).setLoop(true));
+
+            sprite.addAnimation(Animations.RobotTurret, new SpriteAnimation(subtextures[91]));
+            sprite.addAnimation(Animations.RobotArcTurret, new SpriteAnimation(subtextures[92]));
         }
 
         public override void onRemovedFromEntity()

@@ -1,4 +1,5 @@
-﻿using GGJ2019.Scenes;
+﻿using GGJ2019.Entities;
+using GGJ2019.Scenes;
 using Microsoft.Xna.Framework;
 using Nez;
 using Nez.AI.FSM;
@@ -18,8 +19,19 @@ namespace GGJ2019.Components
         Dormant,
         Shoot,
         Chase,
-        Patrol
+        Patrol,
+        Turret,
+        ArcTurret
     }
+
+    public enum EnemyType
+    {
+        Patrol,
+        Turret,
+        ArcTurret,
+        Flying
+    }
+
     public class EnemyController : SimpleStateMachine<EnemyStates>, ITriggerListener//SimpleStateMachine<EnemyStates>
     {
         Health hp;
@@ -31,6 +43,7 @@ namespace GGJ2019.Components
         Entity player;
         Camera camera;
 
+        EnemyType type;
         Direction direction = Direction.Left;
         bool isTurret = false;
         float wakeDistance = NezGame.designWidth / 1.5f;
@@ -44,9 +57,10 @@ namespace GGJ2019.Components
         bool isGrounded => collisionState.below;
         bool isMovingHorizontal => velocity.X > 0f || velocity.X < 0f;
 
-        public EnemyController(): base()
+        public EnemyController(EnemyType type = EnemyType.Patrol): base()
         {
             initialState = EnemyStates.Dormant;
+            this.type = type;
         }
 
         public override void onAddedToEntity()
@@ -84,11 +98,21 @@ namespace GGJ2019.Components
         void Dormant_Enter() { }
         void Dormant_Tick()
         {
-            animationManager.Play(Animations.RobotIdle);
             //check distance to camera
             if(Vector2.Distance(entity.position, camera.position) < wakeDistance)
             {
-                currentState = EnemyStates.Patrol;
+                switch (type)
+                {
+                    case EnemyType.Turret:
+                        currentState = EnemyStates.Turret;
+                        break;
+                    case EnemyType.ArcTurret:
+                        currentState = EnemyStates.ArcTurret;
+                        break;
+                    default:
+                        currentState = EnemyStates.Patrol;
+                        break;
+                }
             }
         }
         void Dormant_Exit() { }
@@ -146,5 +170,52 @@ namespace GGJ2019.Components
         void Shoot_Enter() { }
         void Shoot_Tick() { }
         void Shoot_Exit() { }
+
+
+        float shootTimer = 0f;
+        const float shootTime = 1.5f;
+
+        void Turret_Enter()
+        {
+            shootTimer = shootTime;
+        }
+        void Turret_Tick()
+        {
+            animationManager.Play(Animations.RobotTurret);
+            shootTimer -= Time.deltaTime;
+            if(shootTimer < 0f)
+            {
+                //shoot diagonal down
+                float xVelMult = direction == Direction.Left ? -1 : 1;
+                float bulletVel = 300f;
+                Vector2 vel = new Vector2(bulletVel * xVelMult, Math.Abs(bulletVel / 2f));
+                EnemyBullet bullet = new EnemyBullet(vel, this.entity.position);
+                entity.scene.addEntity(bullet);
+                shootTimer = shootTime;
+            }
+        }
+        void Turret_Exit() { }
+
+
+        void ArcTurret_Enter()
+        {
+            shootTimer = shootTime;
+        }
+        void ArcTurret_Tick()
+        {
+            animationManager.Play(Animations.RobotArcTurret);
+            shootTimer -= Time.deltaTime;
+            if (shootTimer < 0f)
+            {
+                //shoot diagonal down
+                float xVelMult = direction == Direction.Left ? -1 : 1;
+                float bulletVel = 300f;
+                Vector2 vel = new Vector2(bulletVel * xVelMult, -Math.Abs(bulletVel / 2f));
+                EnemyBullet bullet = new EnemyBullet(vel, this.entity.position, gravity, 12f, 12f);
+                entity.scene.addEntity(bullet);
+                shootTimer = shootTime;
+            }
+        }
+        void ArcTurret_Exit() { }
     }
 }
