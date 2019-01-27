@@ -321,6 +321,8 @@ namespace GGJ2019.Components
             moveSpeed /= 3f;
             rotatesForJumps = false;
             jumpTilesHigh = 3;
+            //var gs = (GameScene)entity.scene;
+            //Core.schedule(0.7f, (t) => );
 
         }
 
@@ -328,11 +330,14 @@ namespace GGJ2019.Components
         {
             //add the sigh sprite
             var scene = (GameScene)entity.scene;
+            scene.sighSound.Play(0.3f, -0.5f, 0f);
             var sigh = entity.scene.addEntity(new Sigh(scene.tiles));
             sigh.position = entity.position;
             sprite.onAnimationCompletedEvent -= sighOver;
             Core.schedule(2f, (t) =>
             {
+                NezGame.TurnOffMusic();
+                NezGame.TurnOnMusic(NezGame.postGameMusic);
                 headingHome = true;
                 var e = new Arrow(scene.carSubtextures);
                 e.position = entity.position + new Vector2(30f, -60f);

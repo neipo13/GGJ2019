@@ -36,7 +36,8 @@ namespace GGJ2019.Scenes
                 inputs[i] = new InputHandler(i);
             }
             SetupTitle();
-            NezGame.TurnOnMusic();
+            NezGame.TurnOffMusic();
+            NezGame.TurnOnMusic(NezGame.gameMusic);
         }
 
         private void SetupTitle()

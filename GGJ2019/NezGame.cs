@@ -21,6 +21,8 @@ namespace GGJ2019
         public static int designHeight => TilesHigh * TileSize;
 
         public static SoundEffectInstance musicInstance;
+        public static SoundEffect gameMusic;
+        public static SoundEffect postGameMusic;
         /// <summary>
         /// Must be between 1 and 4
         /// </summary>
@@ -37,26 +39,31 @@ namespace GGJ2019
         protected override void Initialize()
         {
             base.Initialize();
-            var soundEffect = Content.Load<SoundEffect>("audio/gameplaymusic");
-            NezGame.musicInstance = soundEffect.CreateInstance();
+            gameMusic = Content.Load<SoundEffect>("audio/gameplaymusic");
+            NezGame.musicInstance = gameMusic.CreateInstance();
             NezGame.musicInstance.IsLooped = true;
             musicInstance.Volume = musicInstance.Volume / 4f;
+
+            postGameMusic = Content.Load<SoundEffect>("audio/Music_PostGame");
             scene = Scene.createWithDefaultRenderer();
             base.Update(new GameTime());
             base.Draw(new GameTime());
-            scene = new TitleScene();
-            //scene = new HomeScene();
+            //scene = new TitleScene();
+            scene = new HomeScene();
             //scene = new GameScene();
         }
 
-        public static void TurnOnMusic()
+        public static void TurnOnMusic(SoundEffect soundEffect)
         {
+            NezGame.musicInstance = soundEffect.CreateInstance();
+            NezGame.musicInstance.IsLooped = true;
+            musicInstance.Volume = musicInstance.Volume / 4f;
             NezGame.musicInstance.Play();
         }
 
         public static void TurnOffMusic()
         {
-            NezGame.musicInstance.Stop(false);
+            NezGame.musicInstance.Stop();
         }
     }
 }

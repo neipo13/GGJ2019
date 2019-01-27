@@ -20,6 +20,7 @@ namespace GGJ2019.Scenes
     public class HomeScene : Scene
     {
         public SoundEffect carFinale;
+        public SoundEffect ballSound;
 
         public override void initialize()
         {
@@ -43,7 +44,22 @@ namespace GGJ2019.Scenes
             var tiles = Subtexture.subtexturesFromAtlas(tileTexture, 16, 16);
 
             carFinale = content.Load<SoundEffect>("audio/CAR_FINALE");
+            ballSound = content.Load<SoundEffect>("audio/Ball");
             CreateKid(tiles);
+        }
+
+        float timer;
+        const float time = 1f;
+        public override void update()
+        {
+            base.update();
+            timer -= Time.deltaTime;
+            if(timer <= 0f)
+            {
+                timer = time;
+                ballSound.Play();
+
+            }
         }
 
         private void CreateKid(List<Subtexture> tiles)
@@ -55,11 +71,13 @@ namespace GGJ2019.Scenes
             e.addComponent(sprite);
             e.addComponent(ball);
             addEntity(e);
+            timer = time;
             ball
                 .tween("localOffset", new Vector2(0f, -30f), 0.5f)
                 .setEaseType(Nez.Tweens.EaseType.SineOut)
                 .setLoops(Nez.Tweens.LoopType.PingPong, 99)
                 .start();
+            ballSound.Play();
 
             ball.tween("rotation", 100f, 10f).setEaseType(Nez.Tweens.EaseType.Linear).start();
 

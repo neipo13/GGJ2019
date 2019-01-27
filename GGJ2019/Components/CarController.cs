@@ -71,7 +71,7 @@ namespace GGJ2019.Components
             Core.schedule(carDriveLength/4f, (t) => {
                 scene.CameraShake();
                 //spawn a bunch of debris
-                for(int i = 0; i < 20; i++)
+                for(int i = 0; i < 100; i++)
                 {
                     scene.addEntity(new Debris(scene.collisionLayer, new Vector2(0f, entity.position.Y), scene.tiles, 1f));
                 }

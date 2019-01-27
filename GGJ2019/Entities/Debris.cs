@@ -24,7 +24,7 @@ namespace GGJ2019.Entities
             float ySpeed = Nez.Random.range(-maxYSpeed, minYSpeed);
             if(xDir > 0f)
             {
-                xSpeed = Nez.Random.range(0f, maxSpeedX);
+                xSpeed = Nez.Random.range(0f, 2f * maxSpeedX);
             }
             else if (xDir < 0f)
             {

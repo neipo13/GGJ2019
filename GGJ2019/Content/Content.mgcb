@@ -153,3 +153,27 @@
 /processorParam:Quality=Best
 /build:audio/FANFARE.wav
 
+#begin audio/GOAL_REACHED.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/GOAL_REACHED.wav
+
+#begin audio/ggjSigh.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/ggjSigh.wav
+
+#begin audio/Music_PostGame.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/Music_PostGame.wav
+
+#begin audio/Ball.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/Ball.wav
+

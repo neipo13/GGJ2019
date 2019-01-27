@@ -41,6 +41,8 @@ namespace GGJ2019.Scenes
         public SoundEffect explosionSound;
         public SoundEffect hitSound;
         public SoundEffect fanfareSound;
+        public SoundEffect goalReachedSound;
+        public SoundEffect sighSound;
 
         CameraShake shaker;
 
@@ -129,6 +131,8 @@ namespace GGJ2019.Scenes
             explosionSound = content.Load<SoundEffect>("audio/ENEMY_EXPLOSION");
             hitSound = content.Load<SoundEffect>("audio/ENEMY_HIT");
             fanfareSound = content.Load<SoundEffect>("audio/FANFARE");
+            goalReachedSound = content.Load<SoundEffect>("audio/GOAL_REACHED");
+            sighSound = content.Load<SoundEffect>("audio/ggjSigh");
 
             shaker = camera.addComponent(new CameraShake());
         }

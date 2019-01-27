@@ -52,7 +52,7 @@ namespace GGJ2019.Components
                 cc.headingHome = true;
                 var finalPos = entity.position - new Vector2(0, 32);
                 NezGame.TurnOffMusic();
-                gs.fanfareSound.Play(0.25f, 0f, 0f);
+                gs.goalReachedSound.Play();
                 entity
                     .tweenPositionTo(entity.position - new Vector2(0f, 80f), 0.3f)
                     .setEaseType(Nez.Tweens.EaseType.SineOut)
@@ -65,7 +65,10 @@ namespace GGJ2019.Components
                             entity.rotation = 0f;
                             //do whatever stuff we need to with player
                             Core.schedule(1.2f, (t) => this.entity.enabled = false);
-                            pc.calmDown();
+                            gs.fanfareSound.Play(0.25f, 0f, 0f);
+                            Core.schedule(2.4f, (t) => {
+                                pc.calmDown();
+                            });
                         }))
                     .start();
             }

@@ -1,0 +1,14 @@
+[
+    {
+        "index":0,
+        "Left": [37, 65],
+        "Right":[39, 68],
+        "Up":[38, 87],
+        "Down":[40, 83],
+        "jumpButton":[4096],
+        "shootButton":[16384],
+        "jumpKey": [90, 74],
+        "shootKey": [88, 75]
+    }
+    
+]
