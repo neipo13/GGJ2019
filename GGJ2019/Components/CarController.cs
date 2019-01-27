@@ -65,14 +65,23 @@ namespace GGJ2019.Components
         {
             //tween in & spawn player at end
             sprite.play(CarAnimations.Move);
+            var carDriveLength = 0.5f;
+            var scene = (GameScene)entity.scene;
+            Core.schedule(carDriveLength/4f, (t) => {
+                scene.CameraShake();
+                //spawn a bunch of debris
+                for(int i = 0; i < 20; i++)
+                {
+                    scene.addEntity(new Debris(scene.collisionLayer, new Vector2(0f, entity.position.Y), scene.tiles, 1f));
+                }
+            });
             entity
-                .tweenPositionTo(new Vector2(driveInLocation, entity.position.Y), 0.5f)
+                .tweenPositionTo(new Vector2(driveInLocation, entity.position.Y), carDriveLength)
                 .setEaseType(Nez.Tweens.EaseType.SineOut)
                 .setCompletionHandler((a) =>
                 {
                     drivingIn = false;
                     //spawn player;
-                    var scene = (GameScene)entity.scene;
                     scene.player = new Player(scene.inputs[0], scene.tiles, scene.collisionLayer, scene.followEntity, new Vector2(350f, -300f));
                     scene.player.position = entity.position - new Vector2(0f, 10f);
                     scene.followEntity.position = scene.player.position;

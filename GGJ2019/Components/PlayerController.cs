@@ -3,6 +3,7 @@ using GGJ2019.Entities;
 using GGJ2019.Scenes;
 using GGJ2019.Util.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Nez;
 using Nez.Audio;
 using Nez.Sprites;
@@ -39,7 +40,8 @@ namespace GGJ2019.Components
         Direction direction = Direction.Right;
         ColliderTriggerHelper triggerHelper;
 
-        AudioSource swingAudioSource;
+        SoundEffect jumpSound;
+        SoundEffect shootSound;
 
 
         float moveSpeed = 175f;
@@ -81,6 +83,10 @@ namespace GGJ2019.Components
             maxSpeedVec = new Vector2(moveSpeed * 2f, moveSpeed * 3f);
             triggerHelper = new ColliderTriggerHelper(entity);
             animationManager.Play(Animations.PlayerIdle);
+
+            var gs = (GameScene)entity.scene;
+            jumpSound = gs.JumpSound;
+            shootSound = gs.ShootSound;
         }
 
         public void OnGameOver()
@@ -169,7 +175,11 @@ namespace GGJ2019.Components
                 {
                     lr = Direction.Left;
                 }
+                var gs = (GameScene)entity.scene;
                 var bullet = entity.scene.addEntity(new Bullet(lr, angled, entity.position));
+                shootSound.Play();
+                float shakeDir = lr == Direction.Left ? 1 : -1;
+                gs.CameraShake(2f, 0.9f, new Vector2(shakeDir, 0));
             }
         }
 
@@ -263,7 +273,7 @@ namespace GGJ2019.Components
             landingInputBufferTimer = 0;
             justJumpedBufferTimer = offGroundInputBufferFrames;
             var scene = (Scenes.GameScene)entity.scene;
-            //scene.PlaySoundEffect(Constants.Strings.JUMP_SOUND);
+            jumpSound.Play();
         }
 
         private void setDirection()
@@ -370,6 +380,9 @@ namespace GGJ2019.Components
                 force.X *= lr;
                 velocity = force;
                 hitStunTimer = hitStunTime;
+
+                var gs = (GameScene)entity.scene;
+                gs.CameraShake(shakeIntensity: 10f);
             }
         }
 

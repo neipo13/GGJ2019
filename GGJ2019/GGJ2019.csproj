@@ -50,6 +50,7 @@
     <Compile Include="Components\Health.cs" />
     <Compile Include="Components\McGuffinController.cs" />
     <Compile Include="Components\PlayerController.cs" />
+    <Compile Include="Components\SimpleScreenShake.cs" />
     <Compile Include="Constants\PhysicsLayers.cs" />
     <Compile Include="Constants\RenderLayers.cs" />
     <Compile Include="Constants\Strings.cs" />

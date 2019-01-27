@@ -102,6 +102,7 @@ namespace GGJ2019.Entities
                     Explosion explosion = new Explosion(gs.explosionSubtextures);
                     explosion.position = position + offset;
                     gs.addEntity(explosion);
+                    gs.CameraShake(shakeIntensity: 8f);
                 });
             }
             this.destroy();

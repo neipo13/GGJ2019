@@ -1,5 +1,6 @@
 ﻿using GGJ2019.Scenes;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Nez;
@@ -19,6 +20,7 @@ namespace GGJ2019
         public static int designWidth => TilesWide * TileSize;
         public static int designHeight => TilesHigh * TileSize;
 
+        public static SoundEffectInstance musicInstance;
         /// <summary>
         /// Must be between 1 and 4
         /// </summary>
@@ -35,12 +37,26 @@ namespace GGJ2019
         protected override void Initialize()
         {
             base.Initialize();
+            var soundEffect = Content.Load<SoundEffect>("audio/gameplaymusic");
+            NezGame.musicInstance = soundEffect.CreateInstance();
+            NezGame.musicInstance.IsLooped = true;
+            musicInstance.Volume = musicInstance.Volume / 4f;
             scene = Scene.createWithDefaultRenderer();
             base.Update(new GameTime());
             base.Draw(new GameTime());
             scene = new TitleScene();
             //scene = new HomeScene();
             //scene = new GameScene();
+        }
+
+        public static void TurnOnMusic()
+        {
+            NezGame.musicInstance.Play();
+        }
+
+        public static void TurnOffMusic()
+        {
+            NezGame.musicInstance.Stop(false);
         }
     }
 }

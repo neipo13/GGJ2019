@@ -1,6 +1,8 @@
 ﻿using GGJ2019.Constants;
 using GGJ2019.Util.Input;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 using Nez;
 using Nez.UI;
 using Nez.UI.Widgets;
@@ -9,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Nez.Audio;
 
 namespace GGJ2019.Scenes
 {
@@ -33,6 +36,7 @@ namespace GGJ2019.Scenes
                 inputs[i] = new InputHandler(i);
             }
             SetupTitle();
+            NezGame.TurnOnMusic();
         }
 
         private void SetupTitle()
@@ -67,6 +71,11 @@ namespace GGJ2019.Scenes
                 transitioning = true;
                 Core.scene = new GameScene();
             }
+        }
+
+        public override void onEnd()
+        {
+
         }
     }
 }

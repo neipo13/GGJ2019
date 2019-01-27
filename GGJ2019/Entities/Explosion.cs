@@ -25,6 +25,7 @@ namespace GGJ2019.Entities
             addComponent(sprite);
 
             sprite.onAnimationCompletedEvent += done;
+
         }
 
         private void done(ExplosionAnim anim)

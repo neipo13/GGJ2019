@@ -13,6 +13,8 @@ using Nez.Textures;
 using Nez.Tiled;
 using GGJ2019.Util;
 using Nez.Sprites;
+using Microsoft.Xna.Framework.Audio;
+using GGJ2019.Components;
 
 namespace GGJ2019.Scenes
 {
@@ -31,6 +33,11 @@ namespace GGJ2019.Scenes
         public Player player;
         public Car car;
         public List<Entity> enemies = new List<Entity>();
+
+        public SoundEffect JumpSound;
+        public SoundEffect ShootSound;
+
+        CameraShake shaker;
 
         public override void initialize()
         {
@@ -110,6 +117,15 @@ namespace GGJ2019.Scenes
             bg.addComponent(parallax);
             addEntity(bg);
 
+            JumpSound = content.Load<SoundEffect>("audio/JUMP");
+            ShootSound = content.Load<SoundEffect>("audio/SHOOT");
+
+            shaker = camera.addComponent(new CameraShake());
+        }
+
+        public void CameraShake(float shakeIntensity = 15f, float shakeDegredation = 0.9f, Vector2 shakeDirection = default(Vector2))
+        {
+            shaker.shake(shakeIntensity, shakeDegredation, shakeDirection);
         }
     }
 }

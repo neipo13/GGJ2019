@@ -59,6 +59,7 @@ namespace GGJ2019.Components
                         .setEaseType(Nez.Tweens.EaseType.SineIn)
                         .setCompletionHandler((a) =>
                         {
+                            NezGame.TurnOffMusic();
                             doneAnimating = true;
                             entity.rotation = 0f;
                             //do whatever stuff we need to with player

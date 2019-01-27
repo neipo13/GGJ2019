@@ -99,3 +99,21 @@
 /processorParam:TextureFormat=Color
 /build:img/explosion.png
 
+#begin audio/gameplaymusic.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/gameplaymusic.wav
+
+#begin audio/JUMP.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/JUMP.wav
+
+#begin audio/SHOOT.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/SHOOT.wav
+
