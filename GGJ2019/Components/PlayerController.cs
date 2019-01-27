@@ -383,6 +383,7 @@ namespace GGJ2019.Components
 
                 var gs = (GameScene)entity.scene;
                 gs.CameraShake(shakeIntensity: 10f);
+                gs.hitSound.Play(0.8f, 1f, 0f);
             }
         }
 

@@ -76,11 +76,15 @@ namespace GGJ2019.Entities
             //material.Flashing = true;
             //Core.schedule(0.3f, (t) => material.Flashing = false);
             animationManager.Play(Animations.RobotHit);
+
+            var gs = (GameScene)scene;
+            gs.hitSound.Play();
         }
 
         private void onDeath()
         {
             var gs = (GameScene)scene;
+            gs.hitSound.Play(0.8f, 0.5f, 0f);
             //debris
             var collisionLayer = gs.collisionLayer;
             int debris = Nez.Random.range(5, 9);
@@ -91,7 +95,8 @@ namespace GGJ2019.Entities
 
             //explosions
             int explosions = Nez.Random.range(3,5);
-            for(int i = 0; i < explosions; i++)
+            gs.explosionSound.Play(0.3f, 0f, 0f);
+            for (int i = 0; i < explosions; i++)
             {
                 float timeOffset = Nez.Random.range(0f, 0.15f);
                 float x = Nez.Random.range(-20f, 20f);
@@ -103,6 +108,7 @@ namespace GGJ2019.Entities
                     explosion.position = position + offset;
                     gs.addEntity(explosion);
                     gs.CameraShake(shakeIntensity: 8f);
+                    //gs.explosionSound.Play(0.3f, 0f, 0f);
                 });
             }
             this.destroy();

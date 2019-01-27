@@ -67,7 +67,7 @@ namespace GGJ2019.Components
             sprite.play(CarAnimations.Move);
             var carDriveLength = 0.5f;
             var scene = (GameScene)entity.scene;
-            scene.carIntro.Play();
+            scene.carIntroSound.Play();
             Core.schedule(carDriveLength/4f, (t) => {
                 scene.CameraShake();
                 //spawn a bunch of debris
@@ -117,7 +117,7 @@ namespace GGJ2019.Components
             var scene = (GameScene)entity.scene;
             scene.player.enabled = false;
             sprite.play(CarAnimations.Move);
-            scene.carExit.Play();
+            scene.carExitSound.Play();
             entity
                .tweenPositionTo(new Vector2(-driveInLocation, entity.position.Y), 2.5f)
                .setEaseType(Nez.Tweens.EaseType.SineIn)

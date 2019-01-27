@@ -36,8 +36,11 @@ namespace GGJ2019.Scenes
 
         public SoundEffect JumpSound;
         public SoundEffect ShootSound;
-        public SoundEffect carIntro;
-        public SoundEffect carExit;
+        public SoundEffect carIntroSound;
+        public SoundEffect carExitSound;
+        public SoundEffect explosionSound;
+        public SoundEffect hitSound;
+        public SoundEffect fanfareSound;
 
         CameraShake shaker;
 
@@ -121,8 +124,11 @@ namespace GGJ2019.Scenes
 
             JumpSound = content.Load<SoundEffect>("audio/JUMP");
             ShootSound = content.Load<SoundEffect>("audio/SHOOT");
-            carIntro = content.Load<SoundEffect>("audio/CAR_INTRO");
-            carExit = content.Load<SoundEffect>("audio/CAR_EXIT");
+            carIntroSound = content.Load<SoundEffect>("audio/CAR_INTRO");
+            carExitSound = content.Load<SoundEffect>("audio/CAR_EXIT");
+            explosionSound = content.Load<SoundEffect>("audio/ENEMY_EXPLOSION");
+            hitSound = content.Load<SoundEffect>("audio/ENEMY_HIT");
+            fanfareSound = content.Load<SoundEffect>("audio/FANFARE");
 
             shaker = camera.addComponent(new CameraShake());
         }

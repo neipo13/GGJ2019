@@ -135,3 +135,21 @@
 /processorParam:Quality=Best
 /build:audio/CAR_INTRO.wav
 
+#begin audio/ENEMY_EXPLOSION.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/ENEMY_EXPLOSION.wav
+
+#begin audio/ENEMY_HIT.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/ENEMY_HIT.wav
+
+#begin audio/FANFARE.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/FANFARE.wav
+

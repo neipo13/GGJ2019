@@ -51,6 +51,8 @@ namespace GGJ2019.Components
                 var cc = car.getComponent<CarController>();
                 cc.headingHome = true;
                 var finalPos = entity.position - new Vector2(0, 32);
+                NezGame.TurnOffMusic();
+                gs.fanfareSound.Play(0.25f, 0f, 0f);
                 entity
                     .tweenPositionTo(entity.position - new Vector2(0f, 80f), 0.3f)
                     .setEaseType(Nez.Tweens.EaseType.SineOut)
@@ -59,7 +61,6 @@ namespace GGJ2019.Components
                         .setEaseType(Nez.Tweens.EaseType.SineIn)
                         .setCompletionHandler((a) =>
                         {
-                            NezGame.TurnOffMusic();
                             doneAnimating = true;
                             entity.rotation = 0f;
                             //do whatever stuff we need to with player
