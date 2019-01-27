@@ -42,7 +42,10 @@ namespace GGJ2019.Components
                 var gs = (GameScene)entity.scene;
                 foreach(var en in gs.enemies)
                 {
-                    en.destroy();
+                    if(en.scene != null)
+                    {
+                        en.destroy();
+                    }
                 }
                 var car = gs.car;
                 var cc = car.getComponent<CarController>();

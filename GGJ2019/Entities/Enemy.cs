@@ -1,6 +1,7 @@
 ﻿using GGJ2019.Components;
 using GGJ2019.Constants;
 using GGJ2019.Effects;
+using GGJ2019.Scenes;
 using GGJ2019.Util.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -62,6 +63,21 @@ namespace GGJ2019.Entities
 
         private void onDeath()
         {
+            int explosions = Nez.Random.range(2, 5);
+            var gs = (GameScene)scene;
+            for(int i = 0; i < explosions; i++)
+            {
+                float timeOffset = Nez.Random.range(0f, 0.3f);
+                float x = Nez.Random.range(-20f, 20f);
+                float y = Nez.Random.range(-20f, 20f);
+                Vector2 offset = new Vector2(x, y);
+                Core.schedule(timeOffset, (t) =>
+                {
+                    Explosion explosion = new Explosion(gs.explosionSubtextures);
+                    explosion.position = position + offset;
+                    gs.addEntity(explosion);
+                });
+            }
             this.destroy();
         }
     }

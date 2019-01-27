@@ -24,6 +24,7 @@ namespace GGJ2019.Scenes
         public List<Subtexture> tiles;
         public List<Subtexture> carSubtextures;
         public List<Subtexture> characters;
+        public List<Subtexture> explosionSubtextures;
         PlatformSnapFollowCamera followCamera;
         public TiledTileLayer collisionLayer;
         public Entity followEntity;
@@ -54,6 +55,8 @@ namespace GGJ2019.Scenes
             characters = Subtexture.subtexturesFromAtlas(t2, 32, 32);
             var t3 = content.Load<Texture2D>("img/car");
             carSubtextures = Subtexture.subtexturesFromAtlas(t3, 56, 24);
+            var t4 = content.Load<Texture2D>("img/explosion");
+            explosionSubtextures = Subtexture.subtexturesFromAtlas(t4, 32, 32);
 
             //load tiled
             var tiledMap = content.Load<TiledMap>($"tiled/level");

@@ -57,6 +57,7 @@
     <Compile Include="Entities\Bullet.cs" />
     <Compile Include="Entities\Car.cs" />
     <Compile Include="Entities\Enemy.cs" />
+    <Compile Include="Entities\Explosion.cs" />
     <Compile Include="Entities\McGuffin.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\Sigh.cs" />
