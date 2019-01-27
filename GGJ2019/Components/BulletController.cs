@@ -20,6 +20,9 @@ namespace GGJ2019.Components
         bool hasRotation => rotation >= 0.1f;
         CollisionResult result;
 
+        float maxDistance = NezGame.designWidth * 0.6f; //bullets die after moving n% of screenwidth on x
+        float originalX = 0;
+
         Action<CollisionResult> onCollisionAny;
         public BulletController(Vector2 velocity, Action<CollisionResult> onCollisonWithAnything = null, float friction = 0f, float gravity = 0f)
         {
@@ -37,6 +40,7 @@ namespace GGJ2019.Components
             {
                 mover = entity.addComponent(new Mover());
             }
+            originalX = entity.position.X;
         }
         public void update()
         {
@@ -59,6 +63,13 @@ namespace GGJ2019.Components
             if (result.collider != null)
             {
                 onCollisionAny?.Invoke(result);
+            }
+            if(Math.Abs(entity.position.X - originalX) > maxDistance)
+            {
+                if(this.entity.scene != null)
+                {
+                    this.entity.destroy();
+                }
             }
         }
     }

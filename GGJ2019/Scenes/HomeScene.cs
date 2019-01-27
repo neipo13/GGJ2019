@@ -13,11 +13,14 @@ using Nez.Textures;
 using Nez.Tiled;
 using GGJ2019.Util;
 using Nez.Sprites;
+using Microsoft.Xna.Framework.Audio;
 
 namespace GGJ2019.Scenes
 {
     public class HomeScene : Scene
     {
+        public SoundEffect carFinale;
+
         public override void initialize()
         {
             base.initialize();
@@ -39,6 +42,7 @@ namespace GGJ2019.Scenes
             var tileTexture = content.Load<Texture2D>("img/basic-prototyping");
             var tiles = Subtexture.subtexturesFromAtlas(tileTexture, 16, 16);
 
+            carFinale = content.Load<SoundEffect>("audio/CAR_FINALE");
             CreateKid(tiles);
         }
 

@@ -22,14 +22,14 @@ namespace GGJ2019.Entities
 
         public Bullet(Direction dir, bool angled, Vector2 position) : base("bullet")
         {
-            this.position = position ; 
+            this.position = position;
             float x = bulletSpeed * (dir == Direction.Left ? -1 : 1);
             Vector2 vel = new Vector2(x, 0);
-            
+
             if (angled)
             {
-                vel = new Vector2(x, -Math.Abs(x/2f));
-                if(x > 0f)
+                vel = new Vector2(x, -Math.Abs(x / 2f));
+                if (x > 0f)
                 {
                     this.position = position + new Vector2(4f, 8f);
                 }
@@ -37,9 +37,14 @@ namespace GGJ2019.Entities
                 {
                     this.position = position + new Vector2(-4f, 4f);
                 }
-                
+
             }
-            var mover = addComponent(new BulletController(vel, (r) => this.destroy()));
+            var mover = addComponent(new BulletController(vel, (r) =>
+            {
+                if (this.scene != null)
+                    this.destroy();
+
+            }));
 
             var wallCollider = addComponent(new BoxCollider(16, 8));
             wallCollider.physicsLayer = PhysicsLayers.move;
@@ -58,7 +63,7 @@ namespace GGJ2019.Entities
             bs.followParentEntityRotation = false;
             if (angled)
             {
-                if(x > 0f)
+                if (x > 0f)
                 {
                     bs.rotation = -(float)Math.PI / 8f;
                 }

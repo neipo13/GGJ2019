@@ -117,3 +117,21 @@
 /processorParam:Quality=Best
 /build:audio/SHOOT.wav
 
+#begin audio/CAR_EXIT.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/CAR_EXIT.wav
+
+#begin audio/CAR_FINALE.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/CAR_FINALE.wav
+
+#begin audio/CAR_INTRO.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/CAR_INTRO.wav
+

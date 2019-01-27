@@ -21,7 +21,9 @@ namespace GGJ2019.Entities
         {
 
             this.position = position;
-            var mover = addComponent(new BulletController(velocity, gravity: gravity, onCollisonWithAnything:(r) => this.destroy()));
+            var mover = addComponent(new BulletController(velocity, gravity: gravity, onCollisonWithAnything:(r) => {
+                if(this.scene != null) this.destroy();
+            }));
 
 
             var wallCollider = addComponent(new BoxCollider(sizeX, sizeY));
