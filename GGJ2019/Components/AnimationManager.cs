@@ -18,9 +18,11 @@ namespace GGJ2019.Components
             PlayerCalmIdle,
             PlayerCalmRun,
             PlayerSigh,
+            PlayerHit,
             RobotIdle,
             RobotRun,
             RobotShoot,
+            RobotHit,
             McGuffin
         }
 
@@ -73,6 +75,11 @@ namespace GGJ2019.Components
 
             sprite.addAnimation(Animations.RobotIdle, new SpriteAnimation(subtextures.GetRange(112, 4)));
             sprite.addAnimation(Animations.RobotRun, new SpriteAnimation(subtextures.GetRange(116, 5)));
+            sprite.addAnimation(Animations.RobotHit, new SpriteAnimation(new List<Subtexture>{
+                subtextures[125],
+                subtextures[125]
+            }).setLoop(false).setFps(10));
+            sprite.addAnimation(Animations.PlayerHit, new SpriteAnimation(subtextures[57]));
         }
 
         public override void onRemovedFromEntity()
@@ -86,7 +93,10 @@ namespace GGJ2019.Components
         {
             var currentAnimation = sprite.currentAnimation;
             if (currentAnimation != animation)
+            {
+                if (currentAnimation == Animations.RobotHit && sprite.isPlaying) return;
                 sprite.play(animation);
+            }
         }
     }
 }

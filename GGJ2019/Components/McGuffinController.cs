@@ -39,7 +39,12 @@ namespace GGJ2019.Components
                 local.active = false;
                 var pc = player.getComponent<PlayerController>();
                 pc.turnOff();
-                var car = ((GameScene)entity.scene).car;
+                var gs = (GameScene)entity.scene;
+                foreach(var en in gs.enemies)
+                {
+                    en.destroy();
+                }
+                var car = gs.car;
                 var cc = car.getComponent<CarController>();
                 cc.headingHome = true;
                 var finalPos = entity.position - new Vector2(0, 32);

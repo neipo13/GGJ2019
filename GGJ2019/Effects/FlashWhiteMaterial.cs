@@ -29,7 +29,5 @@ namespace GGJ2019.Effects
         {
             flashingParam = effect.Parameters["flashing"];
         }
-
-
     }
 }

@@ -12,6 +12,7 @@ using Nez;
 using Nez.Textures;
 using Nez.Tiled;
 using GGJ2019.Util;
+using Nez.Sprites;
 
 namespace GGJ2019.Scenes
 {
@@ -28,6 +29,7 @@ namespace GGJ2019.Scenes
         public Entity followEntity;
         public Player player;
         public Car car;
+        public List<Entity> enemies = new List<Entity>();
 
         public override void initialize()
         {
@@ -79,15 +81,28 @@ namespace GGJ2019.Scenes
             mcGuffin.position = mcGufObj.position + Util.TiledPositionHelper.tiledCenteringVec;
             addEntity(mcGuffin);
 
-            var enemies = tiledMap.getObjectGroup("enemies").objects;
-            foreach(var enemyObj in enemies)
+            var enemyObjs = tiledMap.getObjectGroup("enemies").objects;
+            foreach(var enemyObj in enemyObjs)
             {
                 var flashingEffect = content.Load<Effect>("effects/flashWhite");
                 var enemy = new Enemy(tiles, collisionLayer, flashingEffect);
                 enemy.position = enemyObj.position + Util.TiledPositionHelper.tiledCenteringVec;
                 addEntity(enemy);
+                enemies.Add(enemy);
 
             }
+
+            var bgTex = content.Load<Texture2D>("img/sky");
+            var bg = new Entity();
+            var bgSpr = new Sprite(bgTex);
+            //bgSpr.localOffset = new Vector2(bgTex.Width / 2, 0);
+            bg.addComponent(bgSpr);
+            bgSpr.renderLayer = (int)RenderLayers.WayBack;
+            var parallax = new ParalaxLayer(camera);
+            //parallax.offset = new Vector2(0, 56);
+            parallax.paralaxRatio = ((float)NezGame.designWidth / (float)tiledMap.widthInPixels) / ((float)bgTex.Width / (float)tiledMap.widthInPixels);
+            bg.addComponent(parallax);
+            addEntity(bg);
 
         }
     }

@@ -20,6 +20,7 @@ namespace GGJ2019.Entities
     public class Enemy : Entity
     {
         FlashWhiteMaterial material;
+        AnimationManager animationManager;
         public Enemy(List<Subtexture> subtextures, TiledTileLayer collisionLayer, Effect flashEffect) : base("enemy")
         {
             var sprite = addComponent(new Sprite<Animations>(subtextures[32]));
@@ -27,8 +28,8 @@ namespace GGJ2019.Entities
             material = new FlashWhiteMaterial(flashEffect);
             sprite.material = material;
 
-            var animManager = new AnimationManager(sprite, subtextures);
-            addComponent(animManager);
+            animationManager = new AnimationManager(sprite, subtextures);
+            addComponent(animationManager);
             sprite.play(Animations.RobotIdle);
 
             var box = addComponent(new BoxCollider(16, 16));
@@ -54,8 +55,9 @@ namespace GGJ2019.Entities
 
         private void onHit()
         {
-            material.Flashing = true;
-            Core.schedule(0.3f, (t) => material.Flashing = false);
+            //material.Flashing = true;
+            //Core.schedule(0.3f, (t) => material.Flashing = false);
+            animationManager.Play(Animations.RobotHit);
         }
 
         private void onDeath()

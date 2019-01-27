@@ -12,7 +12,8 @@ namespace GGJ2019.Constants
         Foreground,
         Object,
         Decorative,
-        Background
+        Background,
+        WayBack
     }
 
     //public static int GetLayer(RenderLayers layer)

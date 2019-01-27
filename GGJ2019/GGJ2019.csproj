@@ -69,6 +69,7 @@
     <Compile Include="Scenes\TitleScene.cs" />
     <Compile Include="Util\Input\InputHandler.cs" />
     <Compile Include="Util\Input\InputMapping.cs" />
+    <Compile Include="Util\ParallaxLayer.cs" />
     <Compile Include="Util\PlatformSnapFollowCamera.cs" />
     <Compile Include="Util\TiledPositionHelper.cs" />
   </ItemGroup>
