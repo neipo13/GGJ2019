@@ -52,7 +52,7 @@ namespace GGJ2019.Components
                 cc.headingHome = true;
                 var finalPos = entity.position - new Vector2(0, 32);
                 NezGame.TurnOffMusic();
-                gs.goalReachedSound.Play();
+                gs.goalReachedSound.Play(1.0f, 0f, 0f);
                 entity
                     .tweenPositionTo(entity.position - new Vector2(0f, 80f), 0.3f)
                     .setEaseType(Nez.Tweens.EaseType.SineOut)

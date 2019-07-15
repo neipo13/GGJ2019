@@ -177,3 +177,9 @@
 /processorParam:Quality=Best
 /build:audio/Ball.wav
 
+#begin audio/FANFARE2.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:audio/FANFARE2.wav
+

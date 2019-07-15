@@ -42,14 +42,14 @@ namespace GGJ2019
             gameMusic = Content.Load<SoundEffect>("audio/gameplaymusic");
             NezGame.musicInstance = gameMusic.CreateInstance();
             NezGame.musicInstance.IsLooped = true;
-            musicInstance.Volume = musicInstance.Volume / 4f;
+            musicInstance.Volume = musicInstance.Volume / 2f;
 
             postGameMusic = Content.Load<SoundEffect>("audio/Music_PostGame");
             scene = Scene.createWithDefaultRenderer();
             base.Update(new GameTime());
             base.Draw(new GameTime());
-            //scene = new TitleScene();
-            scene = new HomeScene();
+            scene = new TitleScene();
+            //scene = new HomeScene();
             //scene = new GameScene();
         }
 
@@ -57,7 +57,7 @@ namespace GGJ2019
         {
             NezGame.musicInstance = soundEffect.CreateInstance();
             NezGame.musicInstance.IsLooped = true;
-            musicInstance.Volume = musicInstance.Volume / 4f;
+            musicInstance.Volume = musicInstance.Volume / 2f;
             NezGame.musicInstance.Play();
         }
 

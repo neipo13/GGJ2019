@@ -76,7 +76,7 @@ namespace GGJ2019.Scenes
             var tiledMap = content.Load<TiledMap>($"tiled/level");
             var tiledEntity = this.createEntity("debugMap");
             var tileMapComponent = tiledEntity.addComponent(new TiledMapComponent(tiledMap, "collision"));
-            tileMapComponent.setLayersToRender("collision");
+            tileMapComponent.setLayersToRender("collision", "backgroundDecorative");
             tileMapComponent.renderLayer = (int)Constants.RenderLayers.Background;
             tileMapComponent.physicsLayer = PhysicsLayers.tiles;
             collisionLayer = tileMapComponent.collisionLayer;
@@ -130,7 +130,7 @@ namespace GGJ2019.Scenes
             carExitSound = content.Load<SoundEffect>("audio/CAR_EXIT");
             explosionSound = content.Load<SoundEffect>("audio/ENEMY_EXPLOSION");
             hitSound = content.Load<SoundEffect>("audio/ENEMY_HIT");
-            fanfareSound = content.Load<SoundEffect>("audio/FANFARE");
+            fanfareSound = content.Load<SoundEffect>("audio/FANFARE2");
             goalReachedSound = content.Load<SoundEffect>("audio/GOAL_REACHED");
             sighSound = content.Load<SoundEffect>("audio/ggjSigh");
 

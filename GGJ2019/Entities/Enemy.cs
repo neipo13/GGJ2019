@@ -78,7 +78,7 @@ namespace GGJ2019.Entities
             animationManager.Play(Animations.RobotHit);
 
             var gs = (GameScene)scene;
-            gs.hitSound.Play();
+            gs.hitSound.Play(0.75f, 0f, 0f);
         }
 
         private void onDeath()
@@ -95,7 +95,7 @@ namespace GGJ2019.Entities
 
             //explosions
             int explosions = Nez.Random.range(3,5);
-            gs.explosionSound.Play(0.3f, 0f, 0f);
+            gs.explosionSound.Play(0.1f, 0f, 0f);
             for (int i = 0; i < explosions; i++)
             {
                 float timeOffset = Nez.Random.range(0f, 0.15f);
